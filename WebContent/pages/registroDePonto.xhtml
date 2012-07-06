@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<ui:composition template="template.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+		<ui:define name="conteudo">
+		<div align="right">
+			<p:spacer height="10" />
+			<h:form>
+				<h:outputText value="#{loginBean.usuario.nome}, seja bem vindo!" />
+			</h:form>
+			<p:spacer height="30" />
+		</div>
+		<div align="center">
+			<font id="campoData" size="2" face="Arial, sans-serif"></font>
+			<font size="2" face="Arial, sans-serif">às</font> 
+			<font id="ur" size="2" face="Arial, sans-serif"></font>
+		</div>
+		
+		<div align="center">
+        	<br/>
+        	<h:outputText rendered="#{empty registroBean.listaDoMes}" style="color:red; font-size:25;" value="Não há registros no mês"/>
+        	<h:dataTable id="tabela" rendered="#{not empty registroBean.listaDoMes}" value="#{registroBean.listaDoMes}" var="lista">
+			<h:column>
+			<f:facet name="header">
+				<h:outputText value="Data"/>
+			</f:facet>
+			<h:outputText value="#{lista.data}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Manhã"/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo0}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="     "/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo1}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>			
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Tarde"/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo2}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>			
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="     "/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo3}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>			
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Extra"/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo4}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>			
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="     "/>
+			</f:facet>
+			<h:outputText value="#{lista.tipo5}">
+				<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>			
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Total"/>
+			</f:facet>
+			#{lista.total}
+		</h:column>
+	</h:dataTable>
+        </div>
+		<script src="../scripts/mostraHora.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			UR_Start();
+			dataCompleta();
+		</script>
+		</ui:define>	
+</ui:composition>

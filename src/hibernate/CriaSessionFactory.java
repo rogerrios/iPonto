@@ -1,6 +1,7 @@
 package hibernate;
 
 import model.Cliente;
+import model.Ponto;
 import model.Usuario;
 
 import org.hibernate.SessionFactory;
@@ -11,8 +12,11 @@ public class CriaSessionFactory {
 
 	public SessionFactory getFactory() {
 		if (factory == null || factory.isClosed()){
-		Configuration cfg = new Configuration().addAnnotatedClass(Cliente.class);
+		Configuration cfg = new Configuration();
+		cfg.addAnnotatedClass(Cliente.class);
 		cfg.addAnnotatedClass(Usuario.class);
+		cfg.addAnnotatedClass(Ponto.class);
+		
 		factory = cfg.buildSessionFactory();
 	}
 		return factory;

@@ -35,10 +35,16 @@
 		<redirect/>
 	</navigation-case>
 	
-	<navigation-case>
+	<!--<navigation-case>
   		<from-outcome>novoUsuario</from-outcome>
    		<to-view-id>/pages/adminPages/novoUsuario.jsf</to-view-id>
    		<redirect/>
+	</navigation-case>-->
+	
+	<navigation-case>
+		<from-outcome>registroDePonto</from-outcome>
+		<to-view-id>/pages/registroDePonto.jsf</to-view-id>
+		<redirect/>
 	</navigation-case>
 </navigation-rule>
 </faces-config>

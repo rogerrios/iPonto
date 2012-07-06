@@ -25,11 +25,15 @@ public class LoginHibernate {
 		Usuario u2 = (Usuario) criteria.uniqueResult();
 		
 		session.close();
-		
 		if (u2 == null){
+			u2 = new Usuario();
+		}
+		return u2;
+		
+		/*if (u2 == null){
 			return u;
 		} else {
 			return u2;
-		}
+		}*/
 	}
 }

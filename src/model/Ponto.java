@@ -24,6 +24,7 @@ public class Ponto {
 	@ManyToOne
 	@JoinColumn(name="id_usuarioEdit")
 	private Usuario usuarioEdit;
+	private String tipo;
 	
 	public Long getId_ponto() {
 		return id_ponto;
@@ -60,6 +61,12 @@ public class Ponto {
 	}
 	public void setUsuarioEdit(Usuario usuarioEdit) {
 		this.usuarioEdit = usuarioEdit;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	
