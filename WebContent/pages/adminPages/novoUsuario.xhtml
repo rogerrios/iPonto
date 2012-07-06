@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<ui:composition template="adminTemplate.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+		<ui:define name="conteudo">
+		<style type="text/css">
+			.colRight{
+				float:right;
+			}
+		</style>
+		<div align="center">
+			<p:fieldset legend="Novo Usuário" style="width:600px;"> 
+			<h:form prependId="false">
+				<h:panelGrid id="grid" columns="3" cellpadding="20" cellspacing="12" style="text-align:left;">
+					<h:outputLabel value="Nome:" for="txtNome" styleClass="colRight"/>
+					<p:inputText id="txtNome" value="#{usuarioBean.usuario.nome}" required="true" maxlength="100" size="50"/>
+					<p:message for="txtNome" display="icon"/>
+					
+					<h:outputLabel value="Login:" for="txtLogin" styleClass="colRight"/>
+					<p:inputText id="txtLogin" value="#{usuarioBean.usuario.login}" required="true" maxlength="45" >
+						<p:ajax event="blur" update="msgLogin msgCad" listener="#{usuarioBean.validaLogin}"/>
+					</p:inputText>
+					<h:panelGroup>
+						<p:message for="txtLogin" display="icon" />
+						<h:outputText id="msgLogin" value="#{usuarioBean.msgLogin}" style="color:red;"/>
+					</h:panelGroup>
+					
+					<h:outputLabel value="Senha:" for="txtSenha" styleClass="colRight"/>
+					<p:password id="txtSenha" value="#{usuarioBean.usuario.senha}" required="true" match="txtSenha2" maxlength="45"/>
+					<p:message for="txtSenha" display="icon"/>
+					
+					<h:outputLabel value="Confirmar:" for="txtSenha2" styleClass="colRight"/>
+					<p:password id="txtSenha2" value="#{usuarioBean.usuario.senha}" required="true" />
+					<p:message for="txtSenha2" display="icon"/>
+					
+					<h:outputLabel value="E-mail:" for="txtEmail" styleClass="colRight"/>
+					<p:inputText id="txtEmail" value="#{usuarioBean.usuario.email}" maxlength="100" size="50"/>
+					<p:message for="txtEmail" display="icon"/>
+					
+					<h:outputLabel value="Permissão:" for="cbPermissao" styleClass="colRight"/>
+						<p:selectOneRadio id="cbPermissao" value="#{usuarioBean.usuario.permissao}" required="true">  
+            				<f:selectItem itemLabel="Usuário" itemValue="USER" />  
+            				<f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
+        				</p:selectOneRadio>
+					<p:message for="cbPermissao" display="icon"/>
+					
+					<h:outputLabel value="Status:" for="cbStatus" styleClass="colRight"/>
+						<p:selectOneRadio id="cbStatus" value="#{usuarioBean.usuario.status}" required="true">  
+            				<f:selectItem itemLabel="Ativado" itemValue="ATIVADO" />  
+            				<f:selectItem itemLabel="Desativado" itemValue="DESATIVADO" />
+        				</p:selectOneRadio>
+					<p:message for="cbStatus" display="icon"/>
+					
+					<h:outputText/>
+					<p:commandButton value="Salvar" actionListener="#{usuarioBean.cadUsuario}" update="grid msgCad"/>
+					<h:outputText/>					
+				</h:panelGrid>
+				<h:outputText id="msgCad" value="#{usuarioBean.msgCadastro}" style="color:green;"/>
+			</h:form>
+			</p:fieldset>
+		</div>
+		</ui:define>
+	</ui:composition>

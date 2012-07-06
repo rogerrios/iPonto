@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <title>iPonto Web</title>
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link rel="stylesheet" type="text/css" href="../../style/style.css" />
+  
+</h:head>
+<h:body>
+<f:view>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <h1><a href="index.jsf">iPonto<span class="logo_colour">Web</span></a></h1>
+        </div>
+      </div>
+      <div id="menubar">
+        <ul id="menu">
+        <h:form>
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li id="registroDePonto"><a href="registroDePonto.xhtml">Registrar Ponto</a></li>
+          <li id="relatorios"><a href="relatorios.xhtml">Relatórios</a></li>
+          <li id="adminPage" class="selected"><a href="admin.xhtml">Admin</a></li>
+          <li id="sair"><h:commandLink action="#{loginBean.logOut}" value="Sair" /></li>
+          </h:form>
+        </ul>
+      </div>
+    </div>
+
+    <div id="site_content">
+      <div id="content">
+      <div align="center">
+			<p:menubar style="text-align:center;">
+				<p:menuitem value="Novo Colaborador" url="novoUsuario.jsf" icon="ui-icon-document"/>`
+				<p:menuitem value="Colaboradores" url="editUsuario.jsf" icon="ui-icon-search"/>
+				<p:menuitem value="Registros de Ponto" url="#" icon="ui-icon-pencil"/>
+			</p:menubar>
+		</div>
+			<div align="right">
+				<p:spacer height="10"/>
+				<h:form>
+					<h:outputText value="#{loginBean.usuario.nome}, seja bem vindo!"/>
+				</h:form>
+				<p:spacer height="30"/>
+			</div>
+      	<ui:insert name="conteudo">Espaço para conteúdo da tela</ui:insert>
+      </div>
+    </div>
+    
+    <div id="footer">
+      <h:form><p><a href="registroDePonto.xhtml">Registrar Ponto</a> | <a href="relatorios.xhtml">Relatórios</a><h:outputText value=" | "/><h:commandLink action="#{loginBean.logOut}" value="Sair"/></p></h:form>
+    </div>
+  </div>
+  </f:view>
+</h:body>
+</html>
