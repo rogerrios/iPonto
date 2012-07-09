@@ -1,21 +1,21 @@
 package tests;
 
+import hibernate.CriaSessionFactory;
+import hibernate.RegistraPontoHibernate;
+
+import java.util.Date;
+
 import model.Cliente;
+import model.Ponto;
 import model.Usuario;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 
 public class test1 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
-		Configuration cfg = new Configuration().addAnnotatedClass(Cliente.class);
-		cfg.addAnnotatedClass(Usuario.class);
-		SessionFactory factory = cfg.buildSessionFactory();
-		
-		Session session = factory.openSession();
+		Session session = new CriaSessionFactory().getFactory().openSession();
 		
 		session.beginTransaction();
 		
@@ -24,6 +24,7 @@ public class test1 {
 		
 		Usuario u = new Usuario();
 		u.setCliente(cliente);
+		u.setId_usuario(1);
 		u.setEmail("admin@email.com");
 		u.setLogin("admin");
 		u.setNome("Admin de Teste");
@@ -31,10 +32,18 @@ public class test1 {
 		u.setSenha("admin");
 		u.setStatus("ATIVADO");
 		
-		session.save(u);
-		session.getTransaction().commit();
-		session.close();
-		factory.close();
+		RegistraPontoHibernate rph = new RegistraPontoHibernate();
+		//Integer tipo = rph.tipoDoProxregistro(new Date(), u);
+		
+		Ponto ponto = new Ponto();
+		ponto.setIp("ip");
+		ponto.setPonto(new Date());
+		ponto.setPontoEdit(new Date());
+		ponto.setUsuario(u);
+		ponto.setUsuarioEdit(u);
+		ponto.setTipo(0);
+		
+		rph.registraPonto(ponto);
 	}
 
 }
