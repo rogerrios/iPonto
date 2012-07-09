@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="pontos")
@@ -15,16 +17,18 @@ public class Ponto {
 	@Id
 	@GeneratedValue
 	private Long id_ponto;
-	private Date ponto;
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
-	private String ip;	
-	private Date pontoEdit;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date hora_ponto;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date hora_salva;
 	@ManyToOne
-	@JoinColumn(name="id_usuarioEdit")
+	@JoinColumn(name="id_usuario_edit")
 	private Usuario usuarioEdit;
-	private String tipo;
+	private Integer tipo;
+	private String ip;
 	
 	public Long getId_ponto() {
 		return id_ponto;
@@ -33,10 +37,10 @@ public class Ponto {
 		this.id_ponto = id_ponto;
 	}
 	public Date getPonto() {
-		return ponto;
+		return hora_ponto;
 	}
 	public void setPonto(Date ponto) {
-		this.ponto = ponto;
+		this.hora_ponto = ponto;
 	}
 	public Usuario getUsuario() {
 		return usuario;
@@ -51,10 +55,10 @@ public class Ponto {
 		this.ip = ip;
 	}
 	public Date getPontoEdit() {
-		return pontoEdit;
+		return hora_salva;
 	}
 	public void setPontoEdit(Date pontoEdit) {
-		this.pontoEdit = pontoEdit;
+		this.hora_salva = pontoEdit;
 	}
 	public Usuario getUsuarioEdit() {
 		return usuarioEdit;
@@ -62,10 +66,10 @@ public class Ponto {
 	public void setUsuarioEdit(Usuario usuarioEdit) {
 		this.usuarioEdit = usuarioEdit;
 	}
-	public String getTipo() {
+	public Integer getTipo() {
 		return tipo;
 	}
-	public void setTipo(String tipo) {
+	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
 	

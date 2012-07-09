@@ -3,6 +3,7 @@ package hibernate;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import model.Ponto;
 import model.Usuario;
 
 import org.hibernate.Query;
@@ -17,28 +18,39 @@ public class RegistraPontoHibernate {
 		this.factory = new CriaSessionFactory().getFactory();
 	}
 	
-	public String tipoDoUltimoRegistro(Date dt, Usuario u){
+	public void registraPonto(Ponto p){
+		Session session = factory.openSession();					
+		session.beginTransaction();
+		session.save(p);
+		session.getTransaction().commit();
+		session.close();		
+	}
+	
+	public Integer tipoDoUltimoRegistro(Date dt, Usuario u){
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Session session = factory.openSession();
-		Query query = session.createQuery("select max(tipo) from ponto where login = :paramLogin and ponto = :paramData");
+		Query query = session.createQuery("select max(tipo) from ponto where id_usuario = :paramID and registroponto = :paramData");
+		query.setParameter("paramID", u.getId_usuario());
 		query.setParameter("paramData", df.format(dt));
 		
-		String tipo = (String)query.uniqueResult();
+		Integer tipo = (Integer)query.uniqueResult();
 		
 		if (tipo == null){
-			tipo = "INI_MANHA";
+			tipo = 0;
 		}
 		
 		session.close();
 		return tipo;
 	}
-	public int tipoDoProxregistro() throws Exception{
-		int tipo = tipoDoUltimoRegistro();
+	
+	public Integer tipoDoProxregistro(Date dt, Usuario u) throws Exception{
+		Integer tipo = tipoDoUltimoRegistro(dt, u);
+		
 		if (tipo == 5){
 			throw new Exception("Limite de registros diários excedido.");
 		} else {
 			tipo++;
-		}
+		}		
 		return tipo;
 	}
 }
