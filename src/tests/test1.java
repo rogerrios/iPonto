@@ -37,8 +37,8 @@ public class test1 {
 		
 		Ponto ponto = new Ponto();
 		ponto.setIp("ip");
-		ponto.setPonto(new Date());
-		ponto.setPontoEdit(new Date());
+		ponto.setHora_ponto(new Date());
+		ponto.setHora_salva(new Date());
 		ponto.setUsuario(u);
 		ponto.setUsuarioEdit(u);
 		ponto.setTipo(0);

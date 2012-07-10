@@ -27,6 +27,11 @@
 	<managed-bean-class>managedBeans.EditUsuarioBean</managed-bean-class>
 	<managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
+<managed-bean>
+	<managed-bean-name>registroBean</managed-bean-name>
+	<managed-bean-class>managedBeans.RegistroBean</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
 
 <navigation-rule>
 	<navigation-case>
@@ -34,12 +39,6 @@
 		<to-view-id>/index.jsf</to-view-id>
 		<redirect/>
 	</navigation-case>
-	
-	<!--<navigation-case>
-  		<from-outcome>novoUsuario</from-outcome>
-   		<to-view-id>/pages/adminPages/novoUsuario.jsf</to-view-id>
-   		<redirect/>
-	</navigation-case>-->
 	
 	<navigation-case>
 		<from-outcome>registroDePonto</from-outcome>

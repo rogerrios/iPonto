@@ -1,23 +1,19 @@
 package tests;
 
-import hibernate.LoginHibernate;
+import hibernate.RelatoriosHibernate;
+
+import java.util.Date;
+import java.util.List;
+
+import model.Ponto;
+import model.PontosDoDia;
 import model.Usuario;
 
 public class test2 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		
 		Usuario u = new Usuario();
-		u.setLogin("admin");
-		u.setSenha("admin");
-		
-		u = new LoginHibernate().fazLogin(u);
-		
-		if (u.getPermissao() == null){
-			System.out.println("Senha errada.");
-		} else {
-			System.out.println(u.getCliente().getNome_cliente());
-			System.out.println("Senha correta.");
-		}
+		u.setId_usuario(1);
+
 	}
-	
-	
 }

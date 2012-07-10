@@ -3,7 +3,7 @@
   <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="370" id="pf13382273455133" outlinks="pf13387750233101 pf13415814240220" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name=".." x="122" y="754" id="pf13382274406027" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" path="/.."/>
   <nodes xsi:type="pageflow:PFPage" name="../registroPonto.jsf" x="122" y="1138" id="pf13382918799315" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" path="/../registroPonto.jsf"/>
-  <nodes xsi:type="pageflow:PFPage" name="index.jsf" x="338" y="178" id="pf13387750233103" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13387750233101" path="/index.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.jsf" x="338" y="178" id="pf13387750233103" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf13387750233101" path="/index.jsf"/>
   <nodes xsi:type="pageflow:PFPage" name="pages/registroDePonto.jsf" id="pf13415814240221" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf13415814240220" path="/pages/registroDePonto.jsf"/>
   <links id="pf13387750233101" target="pf13387750233103" source="pf13382273455133" outcome="index" redirect="true"/>
   <links id="pf13415814240220" target="pf13415814240221" source="pf13382273455133" outcome="registroDePonto" redirect="true"/>

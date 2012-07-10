@@ -36,10 +36,10 @@ public class Ponto {
 	public void setId_ponto(Long id_ponto) {
 		this.id_ponto = id_ponto;
 	}
-	public Date getPonto() {
+	public Date getHora_ponto() {
 		return hora_ponto;
 	}
-	public void setPonto(Date ponto) {
+	public void setHora_ponto(Date ponto) {
 		this.hora_ponto = ponto;
 	}
 	public Usuario getUsuario() {
@@ -54,10 +54,10 @@ public class Ponto {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public Date getPontoEdit() {
+	public Date getHora_salva() {
 		return hora_salva;
 	}
-	public void setPontoEdit(Date pontoEdit) {
+	public void setHora_salva(Date pontoEdit) {
 		this.hora_salva = pontoEdit;
 	}
 	public Usuario getUsuarioEdit() {
