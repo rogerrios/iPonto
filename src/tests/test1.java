@@ -1,12 +1,13 @@
 package tests;
 
 import hibernate.CriaSessionFactory;
-import hibernate.RegistraPontoHibernate;
+import hibernate.RelatoriosHibernate;
 
 import java.util.Date;
+import java.util.List;
 
 import model.Cliente;
-import model.Ponto;
+import model.PontosDoDia;
 import model.Usuario;
 
 import org.hibernate.Session;
@@ -32,18 +33,8 @@ public class test1 {
 		u.setSenha("admin");
 		u.setStatus("ATIVADO");
 		
-		RegistraPontoHibernate rph = new RegistraPontoHibernate();
-		//Integer tipo = rph.tipoDoProxregistro(new Date(), u);
-		
-		Ponto ponto = new Ponto();
-		ponto.setIp("ip");
-		ponto.setHora_ponto(new Date());
-		ponto.setHora_salva(new Date());
-		ponto.setUsuario(u);
-		ponto.setUsuarioEdit(u);
-		ponto.setTipo(0);
-		
-		rph.registraPonto(ponto);
+		List<PontosDoDia> mes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
+		System.out.println(mes);
 	}
 
 }

@@ -3,6 +3,7 @@ package managedBeans;
 import hibernate.RegistraPontoHibernate;
 import hibernate.RelatoriosHibernate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -20,21 +21,14 @@ import model.Usuario;
 public class RegistroBean {
 	
 	private HttpSession session = new CriaHttpSession().getSession();
-	//private List<Ponto> pontosDoMes;
-	private List<PontosDoDia> pontosPorDia;
+	private List<PontosDoDia> pontosDoMes;
 	
-	public void populaPontosDoMes(){
+	public void pontosDoMesValue(){
 		Usuario u = (Usuario) session.getAttribute("usuario");
-		List<Ponto> pontosDoMes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
-		
-		pontosPorDia.clear();
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
+		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
 		}
 		
-	
-	
-	public void registrarPonto(ActionEvent ae){
+	public void registrarPonto(ActionEvent ae) throws ParseException{
 		FacesContext context = FacesContext.getCurrentInstance();  
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 		String ip = request.getRemoteAddr();
@@ -51,7 +45,6 @@ public class RegistroBean {
 		}
 		
 		if (tipo != null){
-			
 			Ponto ponto = new Ponto();
 			ponto.setIp(ip);
 			ponto.setHora_ponto(dt);
@@ -64,7 +57,12 @@ public class RegistroBean {
 			
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso", "Ponto registrado as "+df.format(dt)));
+			pontosDoMesValue();
 		}
+	}
+	
+	public RegistroBean(){
+		pontosDoMesValue();
 	}
 
 	public HttpSession getSession() {
@@ -73,5 +71,13 @@ public class RegistroBean {
 
 	public void setSession(HttpSession session) {
 		this.session = session;
+	}
+
+	public List<PontosDoDia> getPontosDoMes() {
+		return pontosDoMes;
+	}
+
+	public void setPontosDoMes(List<PontosDoDia> pontosDoMes) {
+		this.pontosDoMes = pontosDoMes;
 	}
 }

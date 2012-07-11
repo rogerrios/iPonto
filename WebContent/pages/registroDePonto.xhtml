@@ -20,9 +20,74 @@
 			<font size="2" face="Arial, sans-serif">às</font> 
 			<font id="ur" size="2" face="Arial, sans-serif"></font>
 		</div>
-		
 		<div align="center">
-        	<p:commandButton value="Registrar Ponto" actionListener="#{registroBean.registrarPonto}" update="growl"/>
+			<h:form id="formTable">
+				<table id="tabela">
+					<thead>
+						<tr>
+							<th scope="col" rowspan="2">Data</th>
+							<th scope="col" colspan="4">Horário Normal</th>
+							<th scope="col" colspan="2">Horário Extra</th>
+							<th scope="col" rowspan="2">Total</th>
+						</tr>
+						<tr>
+							<th scope="col">Entrada</th>
+							<th scope="col">Saída</th>
+							<th scope="col">Entrada</th>
+							<th scope="col">Saída</th>
+							<th scope="col">Entrada</th>
+							<th scope="col">Saída</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ui:repeat value="#{registroBean.pontosDoMes}" var="lista">
+							<tr>
+								<td>
+									<h:outputText value="#{lista.dia}">
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{lista.pontos.get(0).hora_ponto}" timeZone="GMT-3">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText rendered="#{lista.pontos.size() > 1}" value="#{lista.pontos.get(1).hora_ponto}" timeZone="GMT-3">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText rendered="#{lista.pontos.size() > 2}" value="#{lista.pontos.get(2).hora_ponto}" timeZone="GMT-3">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 3}" value="#{lista.pontos.get(3).hora_ponto}" timeZone="GMT-3">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 4}" value="#{lista.pontos.get(4).hora_ponto}" timeZone="GMT-3">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 5}" value="#{lista.pontos.get(5).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText value="#{lista.horasTrabalhadas}" />
+								</td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
+			</h:form>
+		</div>
+		<div align="center">
+        	<p:commandButton value="Registrar Ponto" actionListener="#{registroBean.registrarPonto}" update="growl formTable"/>
         </div>
 		<script src="../scripts/mostraHora.js" type="text/javascript"></script>
 		<script type="text/javascript">

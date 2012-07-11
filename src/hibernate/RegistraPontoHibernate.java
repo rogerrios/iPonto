@@ -1,5 +1,6 @@
 package hibernate;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,7 +19,13 @@ public class RegistraPontoHibernate {
 		this.factory = new CriaSessionFactory().getFactory();
 	}
 	
-	public void registraPonto(Ponto p){
+	public void registraPonto(Ponto p) throws ParseException{
+		
+		//Zerando os segundos do ponto
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		String data = df.format(p.getHora_ponto());		
+		p.setHora_ponto(df.parse(data));
+		
 		Session session = factory.openSession();					
 		session.beginTransaction();
 		session.save(p);
