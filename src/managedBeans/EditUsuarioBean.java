@@ -28,14 +28,17 @@ public class EditUsuarioBean {
 	
 	public void populaColaboradores(){
 		Usuario u = (Usuario) session.getAttribute("usuario");
-		u.setPermissao(filtroPermissao);
-		colaboradoresList = new EditUsuarioHibernate().buscarColaboradores(u);
+		Usuario uSearch = new Usuario();
+		uSearch.setCliente(u.getCliente());
+		uSearch.setId_usuario(u.getId_usuario());
+		uSearch.setPermissao(filtroPermissao);
+		colaboradoresList = new EditUsuarioHibernate().buscarColaboradores(uSearch);
 	}
 	
 	public void setaUsuarioEdicao(){
 		for (Usuario u : colaboradoresList){
-			if (u.getId_usuario() == id_usuario_editado){
-				editUsuario = u;
+			if (u.getId_usuario() == id_usuario_editado){		
+				editUsuario = u;				
 				senhaAntiga = editUsuario.getSenha();
 			}
 		}
