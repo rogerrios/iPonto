@@ -1,11 +1,16 @@
 package hibernate;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import model.Usuario;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+
+import util.EnviaEmail;
 
 public class LoginHibernate {
 	
@@ -29,11 +34,23 @@ public class LoginHibernate {
 			u2 = new Usuario();
 		}
 		return u2;
+	}
+	
+	public boolean recuperaSenha(String email) throws AddressException, MessagingException{
+		Session session = factory.openSession();		
 		
-		/*if (u2 == null){
-			return u;
+		Criteria criteria = session.createCriteria(Usuario.class);
+		criteria.add(Restrictions.eq("email", email));
+		
+		Usuario u = (Usuario) criteria.uniqueResult();
+		
+		session.close();
+		
+		if (u == null){
+			return false;
 		} else {
-			return u2;
-		}*/
+			new EnviaEmail().recuperaSenhaEmail(u);
+			return true;
+		}
 	}
 }

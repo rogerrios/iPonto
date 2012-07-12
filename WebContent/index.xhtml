@@ -3,8 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
   <title>iPonto Web</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
@@ -16,9 +17,15 @@
 			document.getElementById("txtUsuario").focus();
 		}
 	</script>
-</head>
+</h:head>
 
-<body onload="setFocus()">
+<h:body>
+<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+			
+<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." 
+        draggable="false" closable="false">
+	<p:graphicImage value="style/ajaxloadingbar.gif" />
+</p:dialog>
   <div id="main">
     <div id="header">
       <div id="logo">
@@ -50,7 +57,7 @@
 							<h:commandButton value="Entrar" style="float:right; width: 80px; height: 25px;" action="#{loginBean.fazLogin}" />
 						</f:facet>
 						</h:panelGrid>
-						<h:outputText rendered="#{not empty loginBean.msg}"	value="#{loginBean.msg}" style="color:red;" />
+						<p:commandLink value="Esqueci minha senha" onclick="dlg.show()"/>
 					</h:form>
 				</div>
 			</div>
@@ -59,5 +66,16 @@
       <p>Bem Vindo</p>
     </div>
   </div>
-</body>
+  
+	<p:dialog header="Enviaremos a senha no email cadastrado" widgetVar="dlg" resizable="false" modal="true">
+		<h:form>
+		<p:growl id="growl" showSummary="false" showDetail="true"/>
+			<h:panelGrid columns="2" style="margin-bottom:10px">
+				<h:outputLabel for="email" value="E-mail:" />
+				<p:inputText id="email" value="#{loginBean.email}"/>
+			</h:panelGrid>
+			<p:commandButton value="Enviar" actionListener="#{loginBean.esqueciSenha}" update="growl" oncomplete="dlg.hide();" style="float:right;"/>
+		</h:form>
+	</p:dialog>	
+</h:body>
 </html>
