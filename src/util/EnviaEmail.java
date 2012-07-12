@@ -47,7 +47,5 @@ public class EnviaEmail {
 				"\n Senha: "+u.getSenha());
 
 		Transport.send(message);
-
-		System.out.println("Done");
 	}
 }

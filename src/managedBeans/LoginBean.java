@@ -9,6 +9,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpSession;
 
+import util.EnviaEmail;
+
 import model.Usuario;
 
 public class LoginBean {
@@ -18,11 +20,14 @@ public class LoginBean {
 	
 	public void esqueciSenha(ActionEvent ae) throws AddressException, MessagingException{
 		FacesContext context = FacesContext.getCurrentInstance();
-		if (new LoginHibernate().recuperaSenha(email)){
+		Usuario u = new LoginHibernate().getUsuarioPorEmail(email);
+		
+		if (u != null){
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Ok", "Email enviado"));
+			new EnviaEmail().recuperaSenhaEmail(u);
 		} else {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Nao existe usuario para este email"));
-		}		
+		}
 	}
 	
 	public String fazLogin(){	

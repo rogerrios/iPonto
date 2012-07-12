@@ -10,8 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
-import util.EnviaEmail;
-
 public class LoginHibernate {
 	
 	private SessionFactory factory;
@@ -36,7 +34,7 @@ public class LoginHibernate {
 		return u2;
 	}
 	
-	public boolean recuperaSenha(String email) throws AddressException, MessagingException{
+	public Usuario getUsuarioPorEmail(String email) throws AddressException, MessagingException{
 		Session session = factory.openSession();		
 		
 		Criteria criteria = session.createCriteria(Usuario.class);
@@ -46,11 +44,12 @@ public class LoginHibernate {
 		
 		session.close();
 		
-		if (u == null){
+		return u;
+		/*if (u == null){
 			return false;
 		} else {
 			new EnviaEmail().recuperaSenhaEmail(u);
 			return true;
-		}
+		}*/
 	}
 }

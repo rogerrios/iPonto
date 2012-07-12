@@ -1,0 +1,6 @@
+<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+			
+<p:dialog modal="true" widgetVar="statusDialog" header="Processando..." 
+        draggable="false" closable="false">
+	<p:graphicImage value="style/ajaxloadingbar.gif" />
+</p:dialog>

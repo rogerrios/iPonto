@@ -12,20 +12,15 @@
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
   <link rel="stylesheet" type="text/css" href="style/table.css" />
-	<script type="text/javascript">	
-		function setFocus() {
-			document.getElementById("txtUsuario").focus();
-		}
-	</script>
 </h:head>
 
 <h:body>
-<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
-			
+
 <p:dialog modal="true" widgetVar="statusDialog" header="Processando..." 
         draggable="false" closable="false">
 	<p:graphicImage value="style/ajaxloadingbar.gif" />
 </p:dialog>
+
   <div id="main">
     <div id="header">
       <div id="logo">
@@ -74,8 +69,11 @@
 				<h:outputLabel for="email" value="E-mail:" />
 				<p:inputText id="email" value="#{loginBean.email}"/>
 			</h:panelGrid>
-			<p:commandButton value="Enviar" actionListener="#{loginBean.esqueciSenha}" update="growl" oncomplete="dlg.hide();" style="float:right;"/>
+			<p:commandButton value="Enviar" actionListener="#{loginBean.esqueciSenha}" update="growl" onstart="dlg.hide(); statusDialog.show();" oncomplete="statusDialog.hide();" style="float:right;"/>
 		</h:form>
-	</p:dialog>	
+	</p:dialog>
+	<script type="text/javascript">	
+			document.getElementById("txtUsuario").focus();
+	</script>
 </h:body>
 </html>
