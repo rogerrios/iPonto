@@ -40,6 +40,18 @@
 						</tr>
 					</thead>
 					<tbody>
+						<h:form rendered="#{empty registroBean.pontosDoMes}">
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</h:form>
 						<ui:repeat value="#{registroBean.pontosDoMes}" var="lista">
 							<tr>
 								<td>
