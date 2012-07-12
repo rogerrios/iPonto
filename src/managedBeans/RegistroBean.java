@@ -14,6 +14,8 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import util.MinutosEmHoras;
+
 import model.Ponto;
 import model.PontosDoDia;
 import model.Usuario;
@@ -22,10 +24,20 @@ public class RegistroBean {
 	
 	private HttpSession session = new CriaHttpSession().getSession();
 	private List<PontosDoDia> pontosDoMes;
+	public String horasTrabalhadasMes;
+	public Integer diasTrabalhadosMes;
 	
 	public void pontosDoMesValue(){
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
+		
+		int minutosTrabalhados = 0;		
+		for (PontosDoDia p : pontosDoMes){
+			minutosTrabalhados += p.getMinutos();
+		}
+		
+		diasTrabalhadosMes = pontosDoMes.size();
+		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);		
 		}
 		
 	public void registrarPonto(ActionEvent ae) throws ParseException{
@@ -79,5 +91,21 @@ public class RegistroBean {
 
 	public void setPontosDoMes(List<PontosDoDia> pontosDoMes) {
 		this.pontosDoMes = pontosDoMes;
+	}
+
+	public String getHorasTrabalhadasMes() {
+		return horasTrabalhadasMes;
+	}
+
+	public void setHorasTrabalhadasMes(String horasTrabalhadasMes) {
+		this.horasTrabalhadasMes = horasTrabalhadasMes;
+	}
+
+	public Integer getDiasTrabalhadosMes() {
+		return diasTrabalhadosMes;
+	}
+
+	public void setDiasTrabalhadosMes(Integer diasTrabalhadosMes) {
+		this.diasTrabalhadosMes = diasTrabalhadosMes;
 	}
 }
