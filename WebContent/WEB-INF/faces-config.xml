@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<faces-config
-    xmlns="http://java.sun.com/xml/ns/javaee"
+<faces-config 
+	xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
     version="2.0">
@@ -30,6 +30,11 @@
 <managed-bean>
 	<managed-bean-name>registroBean</managed-bean-name>
 	<managed-bean-class>managedBeans.RegistroBean</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
+<managed-bean>
+	<managed-bean-name>relatoriosBean</managed-bean-name>
+	<managed-bean-class>managedBeans.RelatoriosBean</managed-bean-class>
 	<managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
 

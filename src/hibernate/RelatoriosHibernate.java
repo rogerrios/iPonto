@@ -23,6 +23,19 @@ public class RelatoriosHibernate {
 		this.factory = new CriaSessionFactory().getFactory();
 	}
 	
+	public List<String> getAnos(Usuario u){
+		Session session = factory.openSession();		
+		
+		SQLQuery query = session.createSQLQuery("select distinct year(hora_ponto) from pontos where id_usuario = :paramID order by year(hora_ponto) desc");
+		query.setParameter("paramID", u.getId_usuario());
+		
+		@SuppressWarnings("unchecked")
+		List<String> anos = query.list();
+		session.close();
+		
+		return anos;
+	}
+	
 	public List<Date> getDiasDoMes(Date dt, Usuario u){
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
 		Session session = factory.openSession();		
