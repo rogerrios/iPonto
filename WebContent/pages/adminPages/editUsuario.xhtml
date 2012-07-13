@@ -72,7 +72,7 @@
 					<p:commandButton value="Salvar" update="@form" ajax="true" actionListener="#{editBean.updateUsuario}" style="float:right;"/>
 					<h:outputText/>					
 				</h:panelGrid>
-				<h:outputText id="msgCad" value="#{editBean.msgCadastro}" style="color:green;"/>
+				<p:growl id="growl" for="msgSucesso" showDetail="true" showSummary="false"/>
 			</p:fieldset>			
 		</div>
 		</h:form>

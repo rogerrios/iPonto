@@ -21,13 +21,13 @@
 					<p:message for="txtNome" display="icon"/>
 					
 					<h:outputLabel value="Login:" for="txtLogin" styleClass="colRight"/>
-					<p:inputText id="txtLogin" value="#{usuarioBean.usuario.login}" required="true" maxlength="45" >
-						<p:ajax event="blur" update="msgLogin msgCad" listener="#{usuarioBean.validaLogin}"/>
-					</p:inputText>
 					<h:panelGroup>
+						<p:inputText id="txtLogin" value="#{usuarioBean.usuario.login}" required="true" maxlength="45" >
+							<p:ajax event="blur" update="msgLogin" listener="#{usuarioBean.validaLogin}"/>
+						</p:inputText>
+						<h:outputText id="msgLogin" value=" #{usuarioBean.msgLogin}" style="color:red;"/>
+					</h:panelGroup>					
 						<p:message for="txtLogin" display="icon" />
-						<h:outputText id="msgLogin" value="#{usuarioBean.msgLogin}" style="color:red;"/>
-					</h:panelGroup>
 					
 					<h:outputLabel value="Senha:" for="txtSenha" styleClass="colRight"/>
 					<p:password id="txtSenha" value="#{usuarioBean.usuario.senha}" required="true" match="txtSenha2" maxlength="45"/>
@@ -56,12 +56,13 @@
 					<p:message for="cbStatus" display="icon"/>
 					
 					<h:outputText/>
-					<p:commandButton value="Salvar" actionListener="#{usuarioBean.cadUsuario}" update="grid msgCad"/>
+					<p:commandButton value="Salvar" actionListener="#{usuarioBean.cadUsuario}" update="grid growl" style="float:right;"/>
 					<h:outputText/>					
 				</h:panelGrid>
-				<h:outputText id="msgCad" value="#{usuarioBean.msgCadastro}" style="color:green;"/>
+				<p:growl id="growl" for="msgSucesso" showDetail="true" showSummary="false"/>
 			</h:form>
 			</p:fieldset>
 		</div>
+		
 		</ui:define>
 	</ui:composition>

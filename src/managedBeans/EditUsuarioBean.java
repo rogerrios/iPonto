@@ -4,6 +4,8 @@ import hibernate.EditUsuarioHibernate;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import model.Usuario;
@@ -12,7 +14,6 @@ public class EditUsuarioBean {
 	private Usuario editUsuario;
 	private List<Usuario> colaboradoresList;
 	private String filtroPermissao;
-	private String msgCadastro;
 	private int id_usuario_editado;
 	private String senhaAntiga;
 	private HttpSession session = new CriaHttpSession().getSession();
@@ -23,7 +24,8 @@ public class EditUsuarioBean {
 		}
 		
 		new EditUsuarioHibernate().updateUsuario(editUsuario);
-		msgCadastro = "Usuário "+editUsuario.getLogin()+" alterado com sucesso";
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage("msgSucesso", new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso", editUsuario.getLogin()+" alterado com sucesso"));
 	}
 	
 	public void populaColaboradores(){
@@ -42,7 +44,6 @@ public class EditUsuarioBean {
 				senhaAntiga = editUsuario.getSenha();
 			}
 		}
-		msgCadastro = null;
 	}
 	
 	public Usuario getEditUsuario() {
@@ -67,14 +68,6 @@ public class EditUsuarioBean {
 
 	public void setFiltroPermissao(String filtroPermissao) {
 		this.filtroPermissao = filtroPermissao;
-	}
-
-	public String getMsgCadastro() {
-		return msgCadastro;
-	}
-
-	public void setMsgCadastro(String msgCadastro) {
-		this.msgCadastro = msgCadastro;
 	}
 
 	public int getId_usuario_editado() {

@@ -16,7 +16,7 @@ import model.Usuario;
 public class EnviaEmail {
 	
 	private final String username = "rogercr10@gmail.com";
-	private final String password = "karrasco84";
+	private final String password = "senha";
 	private Properties props;
 	private Session session;
 
@@ -45,7 +45,7 @@ public class EnviaEmail {
 			+ "\n\n seguem os dados como solicitado: "+
 				"\n\n Login: "+u.getLogin()+
 				"\n Senha: "+u.getSenha());
-
+		
 		Transport.send(message);
 	}
 }

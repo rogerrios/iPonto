@@ -58,13 +58,12 @@ public class RelatoriosHibernate {
 	public List<PontosDoDia> getPontosDoMes(Date dt, Usuario u){
 		List<Date> diasList = getDiasDoMes(dt, u);
 		List<PontosDoDia> pontosDoMesList = new ArrayList<PontosDoDia>();
-		MinutosEmHoras meh = new MinutosEmHoras();
-		
+				
 		Session session = factory.openSession();
 		
-		int minutos = 0;
+		MinutosEmHoras meh = new MinutosEmHoras();
 		
-		for (Date d : diasList){
+		for (Date d : diasList){					
 			PontosDoDia pdd = new PontosDoDia();
 			pdd.setDia(d);
 			
@@ -72,6 +71,7 @@ public class RelatoriosHibernate {
 			pdd.setPontos(pontos);
 			
 			//Calcula minutos trabalhados no dia
+			int minutos = 0;
 			for (int i = 0; i < pontos.size(); i++){
 				if (i % 2 != 0){
 					long horaMenor = pontos.get(i-1).getHora_ponto().getTime();
