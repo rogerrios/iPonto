@@ -4,22 +4,20 @@ import hibernate.RelatoriosHibernate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import util.MinutosEmHoras;
-
 import model.PontosDoDia;
 import model.Usuario;
+import util.MinutosEmHoras;
 
 public class RelatoriosBean {
 	
 	private HttpSession session;
 	private List<String> anos;
-	private String ano;
+	private Integer ano;
 	private String mes;
 	private List<PontosDoDia> pontosDoMes;
 	private String horasTrabalhadasMes;
@@ -36,7 +34,7 @@ public class RelatoriosBean {
 		for (PontosDoDia p : pontosDoMes){
 			minutosTrabalhados += p.getMinutos();
 		}
-		
+
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);		
 		}
@@ -50,14 +48,13 @@ public class RelatoriosBean {
 	public RelatoriosBean(){
 		session = new CriaHttpSession().getSession();
 		getAnosValue();
-		pontosDoMes = new ArrayList<PontosDoDia>();
 	}
 
-	public String getAno() {
+	public Integer getAno() {
 		return ano;
 	}
 
-	public void setAno(String ano) {
+	public void setAno(Integer ano) {
 		this.ano = ano;
 	}
 

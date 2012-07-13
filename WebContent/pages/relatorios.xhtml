@@ -15,12 +15,12 @@
 			<p:spacer height="30" />
 		</div>
 		<div align="center">
-		<h:form>
-			<h:panelGrid columns="2">
-				<h:selectOneMenu value="#{relatoriosBean.ano}" >
+		<h:form prependId="false">
+			<h:panelGrid columns="3">
+				<p:selectOneMenu id="cbAno" value="#{relatoriosBean.ano}" >				 
 					<f:selectItems value="#{relatoriosBean.anos}" var="a" itemValue="#{a}" itemLabel="#{a}" />
-				</h:selectOneMenu>
-				<h:selectOneMenu value="#{relatoriosBean.mes}">
+				</p:selectOneMenu>
+				<p:selectOneMenu value="#{relatoriosBean.mes}" id="cbMes">
 					<f:selectItem itemValue="01" itemLabel="Janeiro" />
 					<f:selectItem itemValue="02" itemLabel="Fevereiro" />
 					<f:selectItem itemValue="03" itemLabel="Março" />
@@ -32,10 +32,10 @@
 					<f:selectItem itemValue="09" itemLabel="Setembro" />
 					<f:selectItem itemValue="10" itemLabel="Outubro" />
 					<f:selectItem itemValue="11" itemLabel="Novembro" />
-					<f:selectItem itemValue="12" itemLabel="Dezembro" />
-					<p:ajax listener="#{relatoriosBean.pontosDoMesValue}" update=":formTable :summary" />
-				</h:selectOneMenu>
-			</h:panelGrid>
+					<f:selectItem itemValue="12" itemLabel="Dezembro" />					
+				</p:selectOneMenu>
+				<p:commandButton id="btnOk" value="Ok" actionListener="#{relatoriosBean.pontosDoMesValue}" update="@form :formTable :summary"/>
+			</h:panelGrid>			
 		</h:form>
 		</div>
 
@@ -70,7 +70,7 @@
 								<td></td>
 								<td></td>
 							</tr>
-						</h:form>
+						</h:form>					
 						<ui:repeat value="#{relatoriosBean.pontosDoMes}" var="lista">
 							<tr>
 								<td>
@@ -112,7 +112,7 @@
 									<h:outputText value="#{lista.horasTrabalhadas}" />
 								</td>
 							</tr>
-						</ui:repeat>
+						</ui:repeat>					
 					</tbody>
 				</table>
 			</h:form>

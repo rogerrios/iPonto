@@ -4,3 +4,5 @@
         draggable="false" closable="false">
 	<p:graphicImage value="style/ajaxloadingbar.gif" />
 </p:dialog>
+
+<p:ajax listener="#{relatoriosBean.pontosDoMesValue}" update=":formTable :summary" />
