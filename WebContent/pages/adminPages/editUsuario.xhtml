@@ -22,7 +22,7 @@
             	<p:ajax event="change" listener="#{editBean.populaColaboradores}" update="cbColaborador"/>
         		</p:selectOneRadio>
         		
-        	<p:selectOneListbox id="cbColaborador" value="#{editBean.id_usuario_editado}" style="height:252px; width:240px;">
+        	<p:selectOneListbox id="cbColaborador" value="#{editBean.id_usuario_editado}" style="height:215px; width:248px;" >
         		<f:selectItems value="#{editBean.colaboradoresList}"  var="c" itemValue="#{c.id_usuario}" itemLabel="#{c.nome} (#{c.login})"/>
         		<p:ajax event="change" update="@form" listener="#{editBean.setaUsuarioEdicao}"/>    		
         	</p:selectOneListbox>        	
@@ -30,7 +30,7 @@
 		</p:fieldset>
 		</div>
 		
-		<p:spacer height="10"/>
+		<p:spacer height="5"/>
 		<div style="float:right;" align="center">
 			<p:fieldset legend="Editar Colaborador" style="width:500px;"> 
 				<h:panelGrid id="grid" columns="3" cellpadding="20" cellspacing="12" style="text-align:left;">
@@ -42,13 +42,9 @@
 					<p:inputText id="txtLogin" value="#{editBean.editUsuario.login}" required="true" maxlength="45" disabled="true"/>
 					<p:message for="txtLogin" display="icon" />
 					
-					<h:outputLabel value="Senha:" for="txtSenha" styleClass="colRight"/>
-					<p:password id="txtSenha" value="#{editBean.editUsuario.senha}" match="txtSenha2" maxlength="45"/>
-					<p:message for="txtSenha" display="icon"/>
-					
-					<h:outputLabel value="Confirmar:" for="txtSenha2" styleClass="colRight"/>
-					<p:password id="txtSenha2" value="#{editBean.editUsuario.senha}"/>
-					<p:message for="txtSenha2" display="icon"/>
+					<h:outputLabel value="Senha:" for="lnkSenha" styleClass="colRight"/>
+					<p:commandLink id="lnkSenha" value="Alterar Senha..." onclick="dlg.show();"/>
+					<h:outputText/>
 					
 					<h:outputLabel value="E-mail:" for="txtEmail" styleClass="colRight"/>
 					<p:inputText id="txtEmail" value="#{editBean.editUsuario.email}" maxlength="45" size="50"/>
@@ -76,5 +72,21 @@
 			</p:fieldset>			
 		</div>
 		</h:form>
+		
+		<p:dialog header="Alterar senha:" widgetVar="dlg" resizable="false" modal="true">
+		<h:form prependId="false">
+		<p:growl id="growlSenha" for="msgSenhaAlterada" showSummary="false" showDetail="true" />
+			<h:panelGrid columns="3" style="margin-bottom:10px">
+				<h:outputLabel for="novaSenha" value="Nova Senha:" />
+				<p:password id="novaSenha" value="#{editBean.novaSenha}" match="confirmSenha" required="true"/>
+				<p:message for="novaSenha" display="icon"/>
+				
+				<h:outputLabel for="confirmSenha" value="Repetir Senha:" />
+				<p:password id="confirmSenha" required="true"/>
+				<p:message for="confirmSenha" display="icon"/>
+			</h:panelGrid>
+			<p:commandButton value="Alterar" actionListener="#{editBean.alterarSenha}" update="@form growlSenha" style="float:right;"/>
+		</h:form>
+		</p:dialog>
 		</ui:define>
 	</ui:composition>

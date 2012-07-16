@@ -1,4 +1,4 @@
-package managedBeans;
+package util;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;

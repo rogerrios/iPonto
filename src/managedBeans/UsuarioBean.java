@@ -7,6 +7,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
+import util.CriaHttpSession;
+
 import model.Usuario;
 
 public class UsuarioBean {

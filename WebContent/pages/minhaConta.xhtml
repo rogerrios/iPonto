@@ -13,56 +13,68 @@
 			}
 		</style>
 		<div align="center">
-			<p:fieldset legend="Novo Usuário" style="width:600px;"> 
+			<p:fieldset legend="Minha Conta" style="width:600px;"> 
 			<h:form prependId="false">
-				<h:panelGrid id="grid" columns="3" cellpadding="20" cellspacing="12" style="text-align:left;">
+				<h:panelGrid id="grid" columns="3" cellpadding="20" cellspacing="12" style="text-align:left;" >
 					<h:outputLabel value="Nome:" for="txtNome" styleClass="colRight"/>
-					<p:inputText id="txtNome" value="#{usuarioBean.usuario.nome}" required="true" maxlength="100" size="50"/>
+					<p:inputText id="txtNome" value="#{minhaContaBean.usuario.nome}" required="true" maxlength="100" size="50"/>
 					<p:message for="txtNome" display="icon"/>
 					
 					<h:outputLabel value="Login:" for="txtLogin" styleClass="colRight"/>
-					<h:panelGroup>
-						<p:inputText id="txtLogin" value="#{usuarioBean.usuario.login}" required="true" maxlength="45" >
-							<p:ajax event="blur" update="msgLogin" listener="#{usuarioBean.validaLogin}"/>
-						</p:inputText>
-						<h:outputText id="msgLogin" value=" #{usuarioBean.msgLogin}" style="color:red;"/>
-					</h:panelGroup>					
-						<p:message for="txtLogin" display="icon" />
+					<p:inputText id="txtLogin" value="#{minhaContaBean.usuario.login}" required="true" maxlength="45" disabled="true"/>
+					<p:message for="txtLogin" display="icon" />
 					
-					<h:outputLabel value="Senha:" for="txtSenha" styleClass="colRight"/>
-					<p:password id="txtSenha" value="#{usuarioBean.usuario.senha}" required="true" match="txtSenha2" maxlength="45"/>
-					<p:message for="txtSenha" display="icon"/>
-					
-					<h:outputLabel value="Confirmar:" for="txtSenha2" styleClass="colRight"/>
-					<p:password id="txtSenha2" value="#{usuarioBean.usuario.senha}" required="true" />
-					<p:message for="txtSenha2" display="icon"/>
+					<h:outputLabel value="Senha:" for="lnkSenha" styleClass="colRight"/>
+					<p:commandLink id="lnkSenha" value="Alterar Senha..." onclick="dlg.show();"/>
+					<h:outputText/>
 					
 					<h:outputLabel value="E-mail:" for="txtEmail" styleClass="colRight"/>
-					<p:inputText id="txtEmail" value="#{usuarioBean.usuario.email}" maxlength="100" size="50"/>
+					<p:inputText id="txtEmail" value="#{minhaContaBean.usuario.email}" maxlength="100" size="50"/>
 					<p:message for="txtEmail" display="icon"/>
 					
 					<h:outputLabel value="Permissão:" for="cbPermissao" styleClass="colRight"/>
-						<p:selectOneRadio id="cbPermissao" value="#{usuarioBean.usuario.permissao}" required="true">  
+						<p:selectOneRadio id="cbPermissao" value="#{minhaContaBean.usuario.permissao}" required="true" disabled="true">  
             				<f:selectItem itemLabel="Usuário" itemValue="USER" />  
             				<f:selectItem itemLabel="Administrador" itemValue="ADMIN" />
         				</p:selectOneRadio>
 					<p:message for="cbPermissao" display="icon"/>
 					
 					<h:outputLabel value="Status:" for="cbStatus" styleClass="colRight"/>
-						<p:selectOneRadio id="cbStatus" value="#{usuarioBean.usuario.status}" required="true">  
+						<p:selectOneRadio id="cbStatus" value="#{minhaContaBean.usuario.status}" required="true" disabled="true">  
             				<f:selectItem itemLabel="Ativado" itemValue="ATIVADO" />  
             				<f:selectItem itemLabel="Desativado" itemValue="DESATIVADO" />
         				</p:selectOneRadio>
 					<p:message for="cbStatus" display="icon"/>
 					
 					<h:outputText/>
-					<p:commandButton value="Salvar" actionListener="#{usuarioBean.cadUsuario}" update="grid growl" style="float:right;"/>
+					<p:commandButton value="Salvar" actionListener="#{minhaContaBean.editUsuario}" update="grid growl" style="float:right;"/>
 					<h:outputText/>					
 				</h:panelGrid>
 				<p:growl id="growl" for="msgSucesso" showDetail="true" showSummary="false"/>
 			</h:form>
 			</p:fieldset>
 		</div>
+		
+		<p:dialog header="Altere sua senha:" widgetVar="dlg" resizable="false" modal="true">
+		<h:form prependId="false">
+		<p:growl id="growlSenha" for="msgSenhaAlterada" showSummary="false" showDetail="true" />
+			<h:panelGrid columns="3" style="margin-bottom:10px">
+				<h:outputLabel for="senhaAtual" value="Senha Atual:" />
+				<p:password id="senhaAtual" value="#{minhaContaBean.senhaAtual}" required="true"/>
+				<p:message for="senhaAtual" display="icon"/>
+				
+				<h:outputLabel for="novaSenha" value="Nova Senha:" />
+				<p:password id="novaSenha" value="#{minhaContaBean.novaSenha}" match="confirmSenha" required="true"/>
+				<p:message for="novaSenha" display="icon"/>
+				
+				<h:outputLabel for="confirmSenha" value="Repetir Senha:" />
+				<p:password id="confirmSenha" required="true"/>
+				<p:message for="confirmSenha" display="icon"/>
+			</h:panelGrid>
+			<p:commandButton value="Alterar" actionListener="#{minhaContaBean.alterarSenha}" update="@form growlSenha" style="float:right;"/>
+		</h:form>
+		</p:dialog>
+		
 		<script type="text/javascript">
 			document.getElementById("minhaConta").setAttribute("class","selected");
 		</script>

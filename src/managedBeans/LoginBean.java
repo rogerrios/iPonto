@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpSession;
 
+import util.CriaHttpSession;
 import util.EnviaEmail;
 
 import model.Usuario;

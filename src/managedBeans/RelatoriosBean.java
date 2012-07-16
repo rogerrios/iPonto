@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import model.PontosDoDia;
 import model.Usuario;
+import util.CriaHttpSession;
 import util.MinutosEmHoras;
 
 public class RelatoriosBean {

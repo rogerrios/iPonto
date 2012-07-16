@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import util.CriaHttpSession;
 import util.MinutosEmHoras;
 
 import model.Ponto;
