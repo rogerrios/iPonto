@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
   <title>iPonto Web</title>
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
@@ -43,6 +44,13 @@
 
     <div id="site_content">
       <div id="content">
+      <div align="right">		
+			<p:spacer height="10" />
+			<h:form>
+				<h:outputText value="#{loginBean.usuario.nome}, seja bem vindo!" />
+			</h:form>
+			<p:spacer height="30" />
+		</div>
       	<ui:insert name="conteudo">Espaço para conteúdo da tela</ui:insert>
       </div>
     </div>
