@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<ui:composition template="template.xhtml"
+	<ui:composition template="adminTemplate.xhtml"
 	  xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -7,20 +7,40 @@
       xmlns:p="http://primefaces.org/ui">
       
 		<ui:define name="conteudo">
-		<link rel="stylesheet" type="text/css" href="../style/table.css" />
-		<div align="right">
-			<p:growl id="growl" showDetail="true" showSummary="false"/>
-			<p:spacer height="10" />
-			<h:form>
-				<h:outputText value="#{loginBean.usuario.nome}, seja bem vindo!" />
-			</h:form>
-			<p:spacer height="30" />
-		</div>
+		<link rel="stylesheet" type="text/css" href="../../style/table.css" />
+
 		<div align="center">
-			<font id="campoData" size="2" face="Arial, sans-serif"></font>
-			<font size="2" face="Arial, sans-serif">às</font> 
-			<font id="ur" size="2" face="Arial, sans-serif"></font>
+		<h:form prependId="false">
+			<h:panelGrid columns="4">
+				<p:selectOneMenu id="cbColab" value="#{registrosUsuarioBean.id_usuario_editado}">
+					<f:selectItem itemLabel="Colaborador..." />				 
+					<f:selectItems value="#{registrosUsuarioBean.colaboradoresList}" var="c" itemValue="#{c.id_usuario}" itemLabel="#{c.nome} (#{c.login})" />
+					<p:ajax listener="#{registrosUsuarioBean.getAnosValue}" update="@form"/>
+				</p:selectOneMenu>
+				<p:selectOneMenu id="cbAno" value="#{registrosUsuarioBean.ano}">
+				<f:selectItem itemLabel="Ano..." />				 
+					<f:selectItems value="#{registrosUsuarioBean.anos}" var="a" itemValue="#{a}" itemLabel="#{a}" />
+				</p:selectOneMenu>
+				<p:selectOneMenu value="#{registrosUsuarioBean.mes}" id="cbMes">
+					<f:selectItem itemLabel="Mês..." />
+					<f:selectItem itemValue="01" itemLabel="Janeiro" />
+					<f:selectItem itemValue="02" itemLabel="Fevereiro" />
+					<f:selectItem itemValue="03" itemLabel="Março" />
+					<f:selectItem itemValue="04" itemLabel="Abril" />
+					<f:selectItem itemValue="05" itemLabel="Maio" />
+					<f:selectItem itemValue="06" itemLabel="Junho" />
+					<f:selectItem itemValue="07" itemLabel="Julho" />
+					<f:selectItem itemValue="08" itemLabel="Agosto" />
+					<f:selectItem itemValue="09" itemLabel="Setembro" />
+					<f:selectItem itemValue="10" itemLabel="Outubro" />
+					<f:selectItem itemValue="11" itemLabel="Novembro" />
+					<f:selectItem itemValue="12" itemLabel="Dezembro" />					
+				</p:selectOneMenu>
+				<p:commandButton id="btnOk" value="Ok" actionListener="#{registrosUsuarioBean.pontosDoMesValue}" update="@form :formTable :summary"/>
+			</h:panelGrid>			
+		</h:form>
 		</div>
+
 		<div align="center">
 			<h:form id="formTable">
 				<table id="tabela">
@@ -41,7 +61,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<h:form rendered="#{empty registroBean.pontosDoMes}">
+						<h:form rendered="#{empty registrosUsuarioBean.pontosDoMes}">
 							<tr style="height:35px;">
 								<td></td>
 								<td></td>
@@ -52,8 +72,8 @@
 								<td></td>
 								<td></td>
 							</tr>
-						</h:form>
-						<ui:repeat value="#{registroBean.pontosDoMes}" var="lista">
+						</h:form>					
+						<ui:repeat value="#{registrosUsuarioBean.pontosDoMes}" var="lista">
 							<tr>
 								<td>
 									<h:outputText value="#{lista.dia}">
@@ -94,28 +114,17 @@
 									<h:outputText value="#{lista.horasTrabalhadas}" />
 								</td>
 							</tr>
-						</ui:repeat>
+						</ui:repeat>					
 					</tbody>
 				</table>
 			</h:form>
 		</div>
 		<div align="center">
 			<h:form id="summary">
-				<h:outputText value="Dias trabalhados: #{registroBean.diasTrabalhadosMes}"/>
+				<h:outputText value="Dias trabalhados: #{registrosUsuarioBean.diasTrabalhadosMes}"/>
 				<br/>
-				<h:outputText value="Horas trabalhadas: #{registroBean.horasTrabalhadasMes}"/>
+				<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>
 			</h:form>
 		</div>
-		<div align="center">
-			<br/>
-			<br/>
-        	<p:commandButton value="Registrar Ponto" actionListener="#{registroBean.registrarPonto}" update="growl formTable summary"/>
-        </div>
-		<script src="../scripts/mostraHora.js" type="text/javascript"></script>
-		<script type="text/javascript">
-			UR_Start();
-			dataCompleta();
-			document.getElementById("registroDePonto").setAttribute("class","selected");
-		</script>
 		</ui:define>
 </ui:composition>

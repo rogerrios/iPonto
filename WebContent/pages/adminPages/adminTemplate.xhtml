@@ -29,7 +29,7 @@
           <li id="registroDePonto"><a href="../registroDePonto.xhtml">Registrar Ponto</a></li>
           <li id="relatorios"><a href="../relatorios.xhtml">Relatórios</a></li>
           <li id="minhaConta"><a href="../minhaConta.xhtml">Minha Conta</a></li>
-          <li id="adminPage" class="selected"><a href="editUsuario.xhtml">Admin</a></li>
+          <li id="adminPage" class="selected"><a href="registrosUsuario.jsf">Admin</a></li>
           <li id="sair"><h:commandLink action="#{loginBean.logOut}" value="Sair" /></li>
           </h:form>
         </ul>
@@ -40,7 +40,7 @@
       <div id="content">
       <div align="center">
 			<p:menubar style="text-align:center;">
-				<p:menuitem value="Registros de Ponto" url="#" icon="ui-icon-pencil"/>
+				<p:menuitem value="Registros de Ponto" url="registrosUsuario.jsf" icon="ui-icon-pencil"/>
 				<p:menuitem value="Colaboradores" url="editUsuario.jsf" icon="ui-icon-search"/>
 				<p:menuitem value="Novo Colaborador" url="novoUsuario.jsf" icon="ui-icon-document"/>`
 			</p:menubar>
@@ -57,7 +57,7 @@
     </div>
     
     <div id="footer">
-      <h:form><p><a href="registroDePonto.xhtml">Registrar Ponto</a> | <a href="relatorios.xhtml">Relatórios</a><h:outputText value=" | "/><h:commandLink action="#{loginBean.logOut}" value="Sair"/></p></h:form>
+      <h:form><p><a href="../registroDePonto.xhtml">Registrar Ponto</a> | <a href="../relatorios.xhtml">Relatórios</a><h:outputText value=" | "/><h:commandLink action="#{loginBean.logOut}" value="Sair"/></p></h:form>
     </div>
   </div>
   </f:view>

@@ -20,7 +20,11 @@ public class EditUsuarioHibernate {
 	public List<Usuario> buscarColaboradores(Usuario u){
 		Session session = factory.openSession();
 		Criteria criteria = session.createCriteria(Usuario.class);
-		criteria.add(Restrictions.eq("permissao", u.getPermissao()));
+		
+		if (u.getPermissao() != null){
+			criteria.add(Restrictions.eq("permissao", u.getPermissao()));
+		}
+		
 		criteria.add(Restrictions.eq("cliente", u.getCliente()));
 		criteria.addOrder(Order.asc("nome"));
 		

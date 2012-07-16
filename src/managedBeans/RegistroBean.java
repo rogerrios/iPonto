@@ -23,7 +23,7 @@ import model.Usuario;
 
 public class RegistroBean {
 	
-	private HttpSession session = new CriaHttpSession().getSession();
+	private HttpSession session;
 	private List<PontosDoDia> pontosDoMes;
 	public String horasTrabalhadasMes;
 	public Integer diasTrabalhadosMes;
@@ -75,6 +75,7 @@ public class RegistroBean {
 	}
 	
 	public RegistroBean(){
+		session = new CriaHttpSession().getSession();
 		pontosDoMesValue();
 	}
 

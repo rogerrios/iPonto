@@ -22,6 +22,7 @@
 					<f:selectItems value="#{relatoriosBean.anos}" var="a" itemValue="#{a}" itemLabel="#{a}" />
 				</p:selectOneMenu>
 				<p:selectOneMenu value="#{relatoriosBean.mes}" id="cbMes">
+					<f:selectItem itemLabel="Selecione o mês..." />
 					<f:selectItem itemValue="01" itemLabel="Janeiro" />
 					<f:selectItem itemValue="02" itemLabel="Fevereiro" />
 					<f:selectItem itemValue="03" itemLabel="Março" />
@@ -61,7 +62,7 @@
 					</thead>
 					<tbody>
 						<h:form rendered="#{empty relatoriosBean.pontosDoMes}">
-							<tr>
+							<tr style="height:35px;">
 								<td></td>
 								<td></td>
 								<td></td>
