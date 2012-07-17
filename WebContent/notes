@@ -6,3 +6,9 @@
 </p:dialog>
 
 <p:ajax listener="#{relatoriosBean.pontosDoMesValue}" update=":formTable :summary" />
+
+<style type="text/css">
+			input[type=text] {
+			width: 40px;
+			}
+		</style>

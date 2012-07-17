@@ -50,13 +50,6 @@ public class RegistrosUsuarioBean {
 		anos = new RelatoriosHibernate().getAnos(u);
 	}
 
-	/*public void populaColaboradores(){
-		Usuario u = (Usuario) session.getAttribute("usuario");
-		Usuario uSearch = new Usuario();
-		uSearch.setCliente(u.getCliente());
-		colaboradoresList = new EditUsuarioHibernate().buscarColaboradores(uSearch);
-	}*/
-
 	public List<Usuario> getColaboradoresList() {
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		Usuario uSearch = new Usuario();

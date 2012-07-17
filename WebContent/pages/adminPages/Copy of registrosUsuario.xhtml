@@ -46,7 +46,7 @@
 		</div>
 
 		<div align="center">
-			<h:form id="formTable" prependId="false">
+			<h:form id="formTable">
 				<table id="tabela">
 					<thead>
 						<tr>
@@ -84,29 +84,52 @@
 										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
 									</h:outputText>
 								</td>
-								<ui:repeat value="#{lista.pontos}" var="p">
 								<td>
-									<p:inplace id="pto">
-										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+									<p:inplace id="tipo0">
+										<p:inputMask value="#{lista.pontos.get(0).hora_ponto}" maxlength="5" mask="99:99" size="5" >
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
 									</p:inplace>
-									<p:tooltip for="pto">
+									<p:tooltip for="tipo0">
 										<h:panelGrid columns="2">
 											<h:outputLabel for="txtIp" value="IP:"/>
-											<h:outputText id="txtIp" value="#{p.ip}"/>
+											<h:outputText id="txtIp" value="#{lista.pontos.get(0).ip}"/>
 											
 											<h:outputLabel for="txtHora" value="Editado em:"/>
-											<h:outputText id="txtHora" value="#{p.hora_salva}">
+											<h:outputText id="txtHora" value="#{lista.pontos.get(0).hora_salva}">
 												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
 											</h:outputText>
 											
 											<h:outputLabel for="txtEdit" value="Editado por:"/>
-											<h:outputText id="txtEdit" value="#{p.usuarioEdit.login}"/>											
+											<h:outputText id="txtEdit" value="#{lista.pontos.get(0).usuarioEdit.login}"/>											
 										</h:panelGrid>
-									</p:tooltip>								
+									</p:tooltip>
 								</td>
-								</ui:repeat>
+								<td>
+									<h:outputText rendered="#{lista.pontos.size() > 1}" value="#{lista.pontos.get(1).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText rendered="#{lista.pontos.size() > 2}" value="#{lista.pontos.get(2).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 3}" value="#{lista.pontos.get(3).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 4}" value="#{lista.pontos.get(4).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
+								<td>
+									<h:outputText  rendered="#{lista.pontos.size() > 5}" value="#{lista.pontos.get(5).hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+									</h:outputText>
+								</td>
 								<td>
 									<h:outputText value="#{lista.horasTrabalhadas}" />
 								</td>

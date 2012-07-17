@@ -12,7 +12,7 @@
 		<h:form prependId="false">
 			<h:panelGrid columns="3">
 				<p:selectOneMenu id="cbAno" value="#{relatoriosBean.ano}" >				 
-					<f:selectItems value="#{relatoriosBean.anos}" var="a" itemValue="#{a}" itemLabel="#{a}" />
+					<f:selectItems value="#{relatoriosBean.anos}" var="a" itemValue="#{a}" itemLabel="#{a}"/>
 				</p:selectOneMenu>
 				<p:selectOneMenu value="#{relatoriosBean.mes}" id="cbMes">
 					<f:selectItem itemLabel="Selecione o mês..." />
@@ -74,27 +74,27 @@
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText value="#{lista.pontos.get(0).hora_ponto}" timeZone="GMT-3">
+									<h:outputText value="#{lista.pontos.get(0).hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText rendered="#{lista.pontos.size() > 1}" value="#{lista.pontos.get(1).hora_ponto}" timeZone="GMT-3">
+									<h:outputText rendered="#{lista.pontos.size() > 1}" value="#{lista.pontos.get(1).hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText rendered="#{lista.pontos.size() > 2}" value="#{lista.pontos.get(2).hora_ponto}" timeZone="GMT-3">
+									<h:outputText rendered="#{lista.pontos.size() > 2}" value="#{lista.pontos.get(2).hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText  rendered="#{lista.pontos.size() > 3}" value="#{lista.pontos.get(3).hora_ponto}" timeZone="GMT-3">
+									<h:outputText  rendered="#{lista.pontos.size() > 3}" value="#{lista.pontos.get(3).hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
 								<td>
-									<h:outputText  rendered="#{lista.pontos.size() > 4}" value="#{lista.pontos.get(4).hora_ponto}" timeZone="GMT-3">
+									<h:outputText  rendered="#{lista.pontos.size() > 4}" value="#{lista.pontos.get(4).hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
