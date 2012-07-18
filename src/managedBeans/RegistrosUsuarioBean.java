@@ -12,6 +12,7 @@ import util.MinutosEmHoras;
 
 import hibernate.EditUsuarioHibernate;
 import hibernate.RelatoriosHibernate;
+import model.Ponto;
 import model.PontosDoDia;
 import model.Usuario;
 
@@ -32,17 +33,27 @@ public class RegistrosUsuarioBean {
 		u.setId_usuario(id_usuario_editado);
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
 		Date dt = df.parse(ano+mes);
-		
+
 		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(dt, u);
-		
+
 		int minutosTrabalhados = 0;
 		for (PontosDoDia p : pontosDoMes){
 			minutosTrabalhados += p.getMinutos();
 		}
 
 		diasTrabalhadosMes = pontosDoMes.size();
-		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);		
+		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
+
+		for (PontosDoDia pdd : pontosDoMes){
+			int p = pdd.getPontos().size();
+			if (p < 6){
+				for (int i=0; i < -p+6; i++){
+					Ponto pto = new Ponto();
+					pdd.getPontos().add(pto);
+				}
+			}
 		}
+	}
 	
 	public void getAnosValue(){
 		Usuario u = new Usuario();

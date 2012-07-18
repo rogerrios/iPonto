@@ -64,7 +64,7 @@ public class RelatoriosHibernate {
 		List<Ponto> pontosList = query.list();
 		
 		session.close();
-		
+			
 		return pontosList;
 	}
 	

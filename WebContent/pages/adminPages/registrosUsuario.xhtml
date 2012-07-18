@@ -86,11 +86,9 @@
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
 								<td>
-									<p:inplace id="pto">
-										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+										<p:inputMask id="pto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
-									</p:inplace>
 									<p:tooltip for="pto">
 										<h:panelGrid columns="2">
 											<h:outputLabel for="txtIp" value="IP:"/>
@@ -104,7 +102,7 @@
 											<h:outputLabel for="txtEdit" value="Editado por:"/>
 											<h:outputText id="txtEdit" value="#{p.usuarioEdit.login}"/>											
 										</h:panelGrid>
-									</p:tooltip>								
+									</p:tooltip>					
 								</td>
 								</ui:repeat>
 								<td>
