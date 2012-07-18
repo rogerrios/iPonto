@@ -44,9 +44,15 @@
 			</h:panelGrid>			
 		</h:form>
 		</div>
-
+		<div>
+			<p align="center">
+				<b></b>
+			</p>
+		</div>
 		<div align="center">
 			<h:form id="formTable" prependId="false">
+				<h:outputText value="#{registrosUsuarioBean.usuarioEditado.nome}"/>
+
 				<table id="tabela">
 					<thead>
 						<tr>
@@ -114,12 +120,15 @@
 				</table>
 			</h:form>
 		</div>
-		<div align="center">
+		<div align="center" style="width:50%; float:left;">
 			<h:form id="summary">
 				<h:outputText value="Dias trabalhados: #{registrosUsuarioBean.diasTrabalhadosMes}"/>
 				<br/>
 				<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>
 			</h:form>
+		</div>
+		<div align="center" style="width:50%; float:right;">
+			<p:commandButton value="Salvar" />
 		</div>
 		</ui:define>
 </ui:composition>

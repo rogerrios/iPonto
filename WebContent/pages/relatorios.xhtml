@@ -73,36 +73,13 @@
 										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
 									</h:outputText>
 								</td>
+								<ui:repeat var="p" value="#{lista.pontos}">
 								<td>
-									<h:outputText value="#{lista.pontos.get(0).hora_ponto}">
+									<h:outputText value="#{p.hora_ponto}">
 										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 									</h:outputText>
 								</td>
-								<td>
-									<h:outputText rendered="#{lista.pontos.size() > 1}" value="#{lista.pontos.get(1).hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
-									</h:outputText>
-								</td>
-								<td>
-									<h:outputText rendered="#{lista.pontos.size() > 2}" value="#{lista.pontos.get(2).hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
-									</h:outputText>
-								</td>
-								<td>
-									<h:outputText  rendered="#{lista.pontos.size() > 3}" value="#{lista.pontos.get(3).hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
-									</h:outputText>
-								</td>
-								<td>
-									<h:outputText  rendered="#{lista.pontos.size() > 4}" value="#{lista.pontos.get(4).hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
-									</h:outputText>
-								</td>
-								<td>
-									<h:outputText  rendered="#{lista.pontos.size() > 5}" value="#{lista.pontos.get(5).hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
-									</h:outputText>
-								</td>
+								</ui:repeat>
 								<td>
 									<h:outputText value="#{lista.horasTrabalhadas}" />
 								</td>

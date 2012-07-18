@@ -1,5 +1,8 @@
 package managedBeans;
 
+import hibernate.EditUsuarioHibernate;
+import hibernate.RelatoriosHibernate;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,20 +10,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import util.CriaHttpSession;
-import util.MinutosEmHoras;
-
-import hibernate.EditUsuarioHibernate;
-import hibernate.RelatoriosHibernate;
-import model.Ponto;
 import model.PontosDoDia;
 import model.Usuario;
+import util.CriaHttpSession;
+import util.MinutosEmHoras;
 
 public class RegistrosUsuarioBean {
 	
 	private HttpSession session;
 	private List<Usuario> colaboradoresList;
 	private int id_usuario_editado;
+	private Usuario usuarioEditado;
 	private List<String> anos;
 	private Integer ano;
 	private String mes;
@@ -43,16 +43,8 @@ public class RegistrosUsuarioBean {
 
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
-
-		for (PontosDoDia pdd : pontosDoMes){
-			int p = pdd.getPontos().size();
-			if (p < 6){
-				for (int i=0; i < -p+6; i++){
-					Ponto pto = new Ponto();
-					pdd.getPontos().add(pto);
-				}
-			}
-		}
+		usuarioEditado = pontosDoMes.get(0).getUsuario();
+		System.out.println(usuarioEditado);
 	}
 	
 	public void getAnosValue(){
@@ -71,6 +63,8 @@ public class RegistrosUsuarioBean {
 	
 	public RegistrosUsuarioBean(){
 		session = new CriaHttpSession().getSession();
+		horasTrabalhadasMes = "00:00";
+		diasTrabalhadosMes = 0;
 	}
 
 	public void setColaboradoresList(List<Usuario> colaboradoresList) {
@@ -131,5 +125,13 @@ public class RegistrosUsuarioBean {
 
 	public void setDiasTrabalhadosMes(Integer diasTrabalhadosMes) {
 		this.diasTrabalhadosMes = diasTrabalhadosMes;
+	}
+
+	public Usuario getUsuarioEditado() {
+		return usuarioEditado;
+	}
+
+	public void setUsuarioEditado(Usuario usuarioEditado) {
+		this.usuarioEditado = usuarioEditado;
 	}
 }
