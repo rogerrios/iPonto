@@ -28,7 +28,7 @@ public class RegistroBean {
 	public String horasTrabalhadasMes;
 	public Integer diasTrabalhadosMes;
 	
-	public void pontosDoMesValue(){
+	public void pontosDoMesValue() throws ParseException{
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
 		
@@ -74,7 +74,7 @@ public class RegistroBean {
 		}
 	}
 	
-	public RegistroBean(){
+	public RegistroBean() throws ParseException{
 		session = new CriaHttpSession().getSession();
 		pontosDoMesValue();
 	}

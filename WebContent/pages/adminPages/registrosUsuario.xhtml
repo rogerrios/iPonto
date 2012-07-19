@@ -44,15 +44,9 @@
 			</h:panelGrid>			
 		</h:form>
 		</div>
-		<div>
-			<p align="center">
-				<b></b>
-			</p>
-		</div>
 		<div align="center">
 			<h:form id="formTable" prependId="false">
-				<h:outputText value="#{registrosUsuarioBean.usuarioEditado.nome}"/>
-
+				<h:outputText rendered="#{registrosUsuarioBean.usuarioEditado != null}" value="#{registrosUsuarioBean.usuarioEditado.nome} (#{registrosUsuarioBean.usuarioEditado.login})" style="font-weight:bold; font-size:15px"/>
 				<table id="tabela">
 					<thead>
 						<tr>

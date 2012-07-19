@@ -44,7 +44,6 @@ public class RegistrosUsuarioBean {
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
 		usuarioEditado = pontosDoMes.get(0).getUsuario();
-		System.out.println(usuarioEditado);
 	}
 	
 	public void getAnosValue(){
