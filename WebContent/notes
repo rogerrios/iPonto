@@ -12,3 +12,11 @@
 			width: 40px;
 			}
 		</style>
+		
+		<p:inplace id="ptoNull" rendered="#{p.hora_ponto == null}" label="Novo">
+										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+										</p:inputMask>
+										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;"/>
+										<p:commandButton icon="ui-icon-close" title="Excluir" style="width:23px; height:23px;"/>
+									</p:inplace>

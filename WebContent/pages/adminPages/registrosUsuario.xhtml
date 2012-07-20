@@ -86,14 +86,14 @@
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
 								<td>
-									<p:inplace id="pto">
-										<p:inputMask id="_pto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+									<p:inplace id="pto" rendered="#{p.hora_ponto != null}">
+										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
 										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;"/>
 										<p:commandButton icon="ui-icon-close" title="Excluir" style="width:23px; height:23px;"/>
 									</p:inplace>
-									<p:tooltip rendered="#{p.hora_ponto != null}" for="pto" style="font-size:13px; color:#0078AB">
+									<p:tooltip for="pto" style="font-size:13px; color:#0078AB">
 										<b>IP:</b> #{p.ip}
 										<br/>
 										<b>Por:</b> #{p.usuarioEdit.login}
@@ -102,7 +102,18 @@
 										<h:outputText id="txtHora" value="#{p.hora_salva}">
 											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3"/>
 										</h:outputText>
-									</p:tooltip>					
+									</p:tooltip>
+									
+									<p:inplace id="ptoNull" rendered="#{p.hora_ponto == null}" label="__:__">
+										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+										</p:inputMask>
+										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;"/>
+									</p:inplace>
+									<p:tooltip for="ptoNull">
+										Clique para inserir novo ponto
+									</p:tooltip>
+														
 								</td>
 								</ui:repeat>
 								<td>
