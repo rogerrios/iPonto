@@ -1,6 +1,5 @@
 package hibernate;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,29 +54,17 @@ public class RelatoriosHibernate {
 		return dias;
 	}
 	
-	public List<Ponto> getPontosDoDia(Date dt, Usuario u) throws ParseException{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		
+	public List<Ponto> getPontosDoDia(Date dt, Usuario u){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
 		cal.add(Calendar.DAY_OF_YEAR, 1);
 		
-		Date dt2 = df.parse(df.format(cal.getTime()));
-		
 		Session session = factory.openSession();
-		
-		/*SQLQuery query = session.createSQLQuery("select * from pontos where id_usuario = :paramID and date(hora_ponto) = :paramDia order by hora_ponto, tipo");
-		query.addEntity(Ponto.class);
-		query.setParameter("paramID", u.getId_usuario());
-		query.setParameter("paramDia", df.format(dt));
-		
-		@SuppressWarnings("unchecked")
-		List<Ponto> pontosList = query.list();*/
 		
 		Criteria criteria = session.createCriteria(Ponto.class);
 		criteria.add(Restrictions.eq("usuario",u));
 		criteria.add(Restrictions.ge("hora_ponto",dt));
-		criteria.add(Restrictions.lt("hora_ponto",dt2));
+		criteria.add(Restrictions.lt("hora_ponto",cal.getTime()));
 
 		@SuppressWarnings("unchecked")
 		List<Ponto> pontosList = criteria.list();
@@ -85,7 +72,7 @@ public class RelatoriosHibernate {
 		return pontosList;
 	}
 	
-	public List<PontosDoDia> getPontosDoMes(Date dt, Usuario u) throws ParseException{
+	public List<PontosDoDia> getPontosDoMes(Date dt, Usuario u){
 		List<Date> diasList = getDiasDoMes(dt, u);
 		List<PontosDoDia> pontosDoMesList = new ArrayList<PontosDoDia>();
 		

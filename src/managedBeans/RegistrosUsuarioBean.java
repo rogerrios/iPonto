@@ -35,6 +35,8 @@ public class RegistrosUsuarioBean {
 		Date dt = df.parse(ano+mes);
 
 		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(dt, u);
+		
+		List<PontosDoDia> pontosDoMesCopy = pontosDoMes.subList(0, pontosDoMes.size());
 
 		int minutosTrabalhados = 0;
 		for (PontosDoDia p : pontosDoMes){

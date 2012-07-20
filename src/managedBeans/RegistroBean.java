@@ -28,7 +28,7 @@ public class RegistroBean {
 	public String horasTrabalhadasMes;
 	public Integer diasTrabalhadosMes;
 	
-	public void pontosDoMesValue() throws ParseException{
+	public void pontosDoMesValue(){
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
 		
@@ -44,7 +44,6 @@ public class RegistroBean {
 	public void registrarPonto(ActionEvent ae) throws ParseException{
 		FacesContext context = FacesContext.getCurrentInstance();  
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
-		String ip = request.getRemoteAddr();
 				
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		RegistraPontoHibernate rph = new RegistraPontoHibernate();
@@ -59,7 +58,7 @@ public class RegistroBean {
 		
 		if (tipo != null){
 			Ponto ponto = new Ponto();
-			ponto.setIp(ip);
+			ponto.setIp(request.getRemoteAddr());
 			ponto.setHora_ponto(dt);
 			ponto.setHora_salva(dt);
 			ponto.setUsuario(u);
@@ -74,7 +73,7 @@ public class RegistroBean {
 		}
 	}
 	
-	public RegistroBean() throws ParseException{
+	public RegistroBean(){
 		session = new CriaHttpSession().getSession();
 		pontosDoMesValue();
 	}
