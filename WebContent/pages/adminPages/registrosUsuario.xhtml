@@ -16,7 +16,7 @@
 		<div align="center">
 		<h:form prependId="false">
 			<h:panelGrid columns="4">
-				<p:selectOneMenu id="cbColab" value="#{registrosUsuarioBean.id_usuario_editado}">
+				<p:selectOneMenu id="cbColab" value="#{registrosUsuarioBean.usuarioEditado.id_usuario}">
 					<f:selectItem itemLabel="Colaborador..." />				 
 					<f:selectItems value="#{registrosUsuarioBean.colaboradoresList}" var="c" itemValue="#{c.id_usuario}" itemLabel="#{c.nome} (#{c.login})" />
 					<p:ajax listener="#{registrosUsuarioBean.getAnosValue}" update="@form"/>
@@ -41,12 +41,12 @@
 					<f:selectItem itemValue="12" itemLabel="Dezembro" />					
 				</p:selectOneMenu>
 				<p:commandButton id="btnOk" value="Ok" actionListener="#{registrosUsuarioBean.pontosDoMesValue}" update="@form :formTable :summary"/>
-			</h:panelGrid>			
+			</h:panelGrid>
 		</h:form>
 		</div>
 		<div align="center">
 			<h:form id="formTable" prependId="false">
-				<h:outputText rendered="#{registrosUsuarioBean.usuarioEditado != null}" value="#{registrosUsuarioBean.usuarioEditado.nome} (#{registrosUsuarioBean.usuarioEditado.login})" style="font-weight:bold; font-size:15px"/>
+				<h:outputText rendered="#{not empty registrosUsuarioBean.usuarioEditado.nome}" value="#{registrosUsuarioBean.usuarioEditado.nome} (#{registrosUsuarioBean.usuarioEditado.login})" style="font-weight:bold; font-size:15px"/>
 				<table id="tabela">
 					<thead>
 						<tr>
@@ -86,22 +86,22 @@
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
 								<td>
-										<p:inputMask id="pto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+									<p:inplace id="pto">
+										<p:inputMask id="_pto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
-									<p:tooltip for="pto">
-										<h:panelGrid columns="2">
-											<h:outputLabel for="txtIp" value="IP:"/>
-											<h:outputText id="txtIp" value="#{p.ip}"/>
-											
-											<h:outputLabel for="txtHora" value="Editado em:"/>
-											<h:outputText id="txtHora" value="#{p.hora_salva}">
-												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3" />
-											</h:outputText>
-											
-											<h:outputLabel for="txtEdit" value="Editado por:"/>
-											<h:outputText id="txtEdit" value="#{p.usuarioEdit.login}"/>											
-										</h:panelGrid>
+										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;"/>
+										<p:commandButton icon="ui-icon-close" title="Excluir" style="width:23px; height:23px;"/>
+									</p:inplace>
+									<p:tooltip rendered="#{p.hora_ponto != null}" for="pto" style="font-size:13px; color:#0078AB">
+										<b>IP:</b> #{p.ip}
+										<br/>
+										<b>Por:</b> #{p.usuarioEdit.login}
+										<br/>
+										<b>Em: </b>
+										<h:outputText id="txtHora" value="#{p.hora_salva}">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-3"/>
+										</h:outputText>
 									</p:tooltip>					
 								</td>
 								</ui:repeat>
@@ -114,15 +114,15 @@
 				</table>
 			</h:form>
 		</div>
+		<h:form id="summary">
 		<div align="center" style="width:50%; float:left;">
-			<h:form id="summary">
-				<h:outputText value="Dias trabalhados: #{registrosUsuarioBean.diasTrabalhadosMes}"/>
-				<br/>
-				<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>
-			</h:form>
+			<h:outputText value="Dias trabalhados: #{registrosUsuarioBean.diasTrabalhadosMes}"/>
+			<br/>
+			<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>			
 		</div>
 		<div align="center" style="width:50%; float:right;">
-			<p:commandButton value="Salvar" />
+			<p:commandButton id="btnSalvar" rendered="#{registrosUsuarioBean.usuarioEditado != null}" value="Salvar" actionListener="#{registrosUsuarioBean.salvarPontos}" update=":formTable" process=":formTable"/>
 		</div>
+		</h:form>
 		</ui:define>
 </ui:composition>

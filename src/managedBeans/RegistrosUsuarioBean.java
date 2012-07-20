@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import model.Ponto;
 import model.PontosDoDia;
 import model.Usuario;
 import util.CriaHttpSession;
@@ -25,19 +26,31 @@ public class RegistrosUsuarioBean {
 	private Integer ano;
 	private String mes;
 	private List<PontosDoDia> pontosDoMes;
+	private List<PontosDoDia> pontosDoMesCopy;
 	private String horasTrabalhadasMes;
 	private Integer diasTrabalhadosMes;
 	
-	public void pontosDoMesValue() throws ParseException{
-		Usuario u = new Usuario();
-		u.setId_usuario(id_usuario_editado);
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
-		Date dt = df.parse(ano+mes);
-
-		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(dt, u);
+	public void salvarPontos(){
+		pontosDoMesCopy = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
 		
-		List<PontosDoDia> pontosDoMesCopy = pontosDoMes.subList(0, pontosDoMes.size());
-
+		for (int i=0; i < pontosDoMes.size(); i++){
+			List<Ponto> pList = pontosDoMes.get(i).getPontos();
+			List<Ponto> pListCopy = pontosDoMesCopy.get(i).getPontos();
+			
+			for (int j=0; j < pList.size(); j++){
+				Date dtNova = pList.get(j).getHora_ponto();
+				Date dtAntiga = pListCopy.get(j).getHora_ponto();
+				
+				if (dtNova!=null && dtAntiga!=null && !dtNova.equals(dtAntiga)){
+					
+				}
+			}
+		}
+	}
+	
+	public void pontosDoMesValue(){
+		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
+		
 		int minutosTrabalhados = 0;
 		for (PontosDoDia p : pontosDoMes){
 			minutosTrabalhados += p.getMinutos();
@@ -45,13 +58,10 @@ public class RegistrosUsuarioBean {
 
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
-		usuarioEditado = pontosDoMes.get(0).getUsuario();
 	}
 	
 	public void getAnosValue(){
-		Usuario u = new Usuario();
-		u.setId_usuario(id_usuario_editado);
-		anos = new RelatoriosHibernate().getAnos(u);
+		anos = new RelatoriosHibernate().getAnos(usuarioEditado);
 	}
 
 	public List<Usuario> getColaboradoresList() {
@@ -62,10 +72,22 @@ public class RegistrosUsuarioBean {
 		return colaboradoresList;
 	}
 	
+	public Date mesAno(){
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Date dt=null;
+		try {
+			dt = df.parse(ano+mes);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dt;
+	}
+	
 	public RegistrosUsuarioBean(){
 		session = new CriaHttpSession().getSession();
 		horasTrabalhadasMes = "00:00";
 		diasTrabalhadosMes = 0;
+		usuarioEditado = new Usuario();
 	}
 
 	public void setColaboradoresList(List<Usuario> colaboradoresList) {
