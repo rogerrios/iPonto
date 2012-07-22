@@ -30,6 +30,10 @@ public class RegistrosUsuarioBean {
 	private String horasTrabalhadasMes;
 	private Integer diasTrabalhadosMes;
 	
+	public void handleSave(){
+		System.out.println("saved");
+	}
+	
 	public void salvarPontos(){
 		pontosDoMesCopy = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
 		
