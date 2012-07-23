@@ -33,6 +33,14 @@ public class RegistraPontoHibernate {
 		session.close();		
 	}
 	
+	public void updatePonto(Ponto p){
+		Session session = factory.openSession();
+		session.beginTransaction();
+		session.update(p);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
 	public Integer tipoDoUltimoRegistro(Date dt, Usuario u){
 		SimpleDateFormat df = new SimpleDateFormat("dd");
 		Session session = factory.openSession();

@@ -14,12 +14,12 @@
 			}
 		</style>
 		<div align="center">
-		<h:form prependId="false">
+		<h:form id="selectForm" prependId="false">
 			<h:panelGrid columns="4">
-				<p:selectOneMenu id="cbColab" value="#{registrosUsuarioBean.usuarioEditado.id_usuario}">
+				<p:selectOneMenu id="cbColab" value="#{registrosUsuarioBean.usuarioEditado.id_usuario}" >
 					<f:selectItem itemLabel="Colaborador..." />				 
 					<f:selectItems value="#{registrosUsuarioBean.colaboradoresList}" var="c" itemValue="#{c.id_usuario}" itemLabel="#{c.nome} (#{c.login})" />
-					<p:ajax listener="#{registrosUsuarioBean.getAnosValue}" update="@form"/>
+					<p:ajax listener="#{registrosUsuarioBean.getAnosValue}" update="cbAno" />
 				</p:selectOneMenu>
 				<p:selectOneMenu id="cbAno" value="#{registrosUsuarioBean.ano}">
 				<f:selectItem itemLabel="Ano..." />				 
@@ -40,7 +40,7 @@
 					<f:selectItem itemValue="11" itemLabel="Novembro" />
 					<f:selectItem itemValue="12" itemLabel="Dezembro" />					
 				</p:selectOneMenu>
-				<p:commandButton id="btnOk" value="Ok" actionListener="#{registrosUsuarioBean.pontosDoMesValue}" update="@form :formTable :summary"/>
+				<p:commandButton id="btnOk" value="Ok" actionListener="#{registrosUsuarioBean.pontosDoMesValue}" update=":formTable :summary"/>
 			</h:panelGrid>
 		</h:form>
 		</div>
@@ -85,15 +85,17 @@
 									</h:outputText>
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
+								<h:form>
 								<td>
 									<p:inplace id="pto" emptyLabel="__:__">
-										<p:ajax event="save" listener="#{registrosUsuarioBean.handleSave}"/>
-										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" required="true" requiredMessage="Valor invalido">
+										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" required="true" requiredMessage="Valor invalido" >
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
-										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;" update=":growl" process="txtHoraPonto" />
-										<p:commandButton icon="ui-icon-closethick" title="Excluir"  style="width:23px; height:23px;"/>
-										</p:inplace>
+										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}" process="@this" style="width:23px; height:20px;" update=":growl :formTable :summary"/>
+										<p:commandButton icon="ui-icon-closethick" title="Excluir" style="width:23px; height:20px;" onclick="dlg.show();" process="@this">
+											<f:setPropertyActionListener target="#{registrosUsuarioBean.pontoEditado}" value="#{p}" />
+										</p:commandButton>
+									</p:inplace>
 									<p:tooltip for="pto" style="font-size:13px; color:#0078AB" rendered="#{p.hora_ponto != null}">
 										<b>IP:</b> #{p.ip}
 										<br/>
@@ -105,6 +107,7 @@
 										</h:outputText>
 									</p:tooltip>												
 								</td>
+								</h:form>
 								</ui:repeat>
 								<td>
 									<h:outputText value="#{lista.horasTrabalhadas}" />
@@ -113,18 +116,22 @@
 						</ui:repeat>					
 					</tbody>
 				</table>
+				<p:remoteCommand name="svPonto" actionListener="#{registrosUsuarioBean.salvarPonto}" update=":growl :formTable :summary" />
 			</h:form>
 		</div>
+		
 		<h:form id="summary">
-		<div align="center" style="width:50%; float:left;">
+		<div align="center" style="width:50%;">
 			<h:outputText value="Dias trabalhados: #{registrosUsuarioBean.diasTrabalhadosMes}"/>
 			<br/>
 			<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>			
 		</div>
-		<div align="center" style="width:50%; float:right;">
-			<p:commandButton id="btnSalvar" rendered="#{not empty registrosUsuarioBean.usuarioEditado.nome}" value="Salvar" actionListener="#{registrosUsuarioBean.salvarPontos}" update=":formTable" process=":formTable"/>
-		</div>
 		</h:form>
 		<p:growl id="growl"/>
+		
+		<p:confirmDialog message="Excluir registro selecionado?" widgetVar="dlg" resizable="false" modal="true">
+			<p:commandButton value="Excluir" actionListener="#{registrosUsuarioBean.deletePonto}" update=":growl :formTable :summary" oncomplete="dlg.hide()" style="float:right;"/>
+			<p:commandButton value="Cancelar" onclick="dlg.hide();" type="button" style="float:right;"/>
+		</p:confirmDialog>		
 		</ui:define>
 </ui:composition>

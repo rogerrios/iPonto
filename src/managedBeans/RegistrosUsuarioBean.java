@@ -1,6 +1,8 @@
 package managedBeans;
 
 import hibernate.EditUsuarioHibernate;
+import hibernate.RegistraPontoHibernate;
+import hibernate.RegistrosUsuarioHibernate;
 import hibernate.RelatoriosHibernate;
 
 import java.text.ParseException;
@@ -8,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 
 import model.Ponto;
@@ -20,7 +25,6 @@ public class RegistrosUsuarioBean {
 	
 	private HttpSession session;
 	private List<Usuario> colaboradoresList;
-	private int id_usuario_editado;
 	private Usuario usuarioEditado;
 	private List<String> anos;
 	private Integer ano;
@@ -29,13 +33,20 @@ public class RegistrosUsuarioBean {
 	private List<PontosDoDia> pontosDoMesCopy;
 	private String horasTrabalhadasMes;
 	private Integer diasTrabalhadosMes;
+	private Ponto pontoEditado;
 	
-	public void handleSave(){
-		System.out.println("saved");
+	public void deletePonto(ActionEvent ae){
+		new RegistrosUsuarioHibernate().deletarPonto(pontoEditado);
+		pontosDoMesValue();
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro deletado",  "Deletado");	
+		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	
-	public void salvarPontos(){
+	public void salvarPonto(ActionEvent ae){
+		System.out.println("entrou "+pontoEditado);
 		pontosDoMesCopy = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
+		//System.out.println(pontoEditado);
+		//new RegistraPontoHibernate().updatePonto(pontoEditado);
 		
 		for (int i=0; i < pontosDoMes.size(); i++){
 			List<Ponto> pList = pontosDoMes.get(i).getPontos();
@@ -44,12 +55,15 @@ public class RegistrosUsuarioBean {
 			for (int j=0; j < pList.size(); j++){
 				Date dtNova = pList.get(j).getHora_ponto();
 				Date dtAntiga = pListCopy.get(j).getHora_ponto();
-				
+			
 				if (dtNova!=null && dtAntiga!=null && !dtNova.equals(dtAntiga)){
-					
+					System.out.println(dtNova);
+					System.out.println(dtAntiga+"rxr");
+					break;
 				}
 			}
 		}
+		
 	}
 	
 	public void pontosDoMesValue(){
@@ -62,6 +76,7 @@ public class RegistrosUsuarioBean {
 
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
+		usuarioEditado = pontosDoMes.get(0).getUsuario();
 	}
 	
 	public void getAnosValue(){
@@ -78,7 +93,7 @@ public class RegistrosUsuarioBean {
 	
 	public Date mesAno(){
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
-		Date dt=null;
+		Date dt = null;
 		try {
 			dt = df.parse(ano+mes);
 		} catch (ParseException e) {
@@ -92,18 +107,11 @@ public class RegistrosUsuarioBean {
 		horasTrabalhadasMes = "00:00";
 		diasTrabalhadosMes = 0;
 		usuarioEditado = new Usuario();
+		pontoEditado = new Ponto();
 	}
 
 	public void setColaboradoresList(List<Usuario> colaboradoresList) {
 		this.colaboradoresList = colaboradoresList;
-	}
-
-	public int getId_usuario_editado() {
-		return id_usuario_editado;
-	}
-
-	public void setId_usuario_editado(int id_usuario_editado) {
-		this.id_usuario_editado = id_usuario_editado;
 	}
 
 	public List<String> getAnos() {
@@ -160,5 +168,13 @@ public class RegistrosUsuarioBean {
 
 	public void setUsuarioEditado(Usuario usuarioEditado) {
 		this.usuarioEditado = usuarioEditado;
+	}
+
+	public Ponto getPontoEditado() {
+		return pontoEditado;
+	}
+
+	public void setPontoEditado(Ponto pontoEditado) {
+		this.pontoEditado = pontoEditado;
 	}
 }
