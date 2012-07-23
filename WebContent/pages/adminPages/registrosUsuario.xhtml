@@ -86,14 +86,13 @@
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
 								<td>
-									<p:inplace id="pto" emptyLabel="__:__" widgetVar="#{p.hashCode()}">
+									<p:inplace id="pto" emptyLabel="__:__">
 										<p:ajax event="save" listener="#{registrosUsuarioBean.handleSave}"/>
-										<p:inputMask value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" >
+										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" required="true" requiredMessage="Valor invalido">
 											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
 										</p:inputMask>
-										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;"/>
+										<p:commandButton icon="ui-icon-check" title="Salvar" style="width:23px; height:23px;" update=":growl" process="txtHoraPonto" />
 										<p:commandButton icon="ui-icon-closethick" title="Excluir"  style="width:23px; height:23px;"/>
-										<p:button icon="ui-icon-cancel" title="Cancelar" style="width:23px; height:23px;" onclick="#{p.hashCode()}.cancel();" />
 										</p:inplace>
 									<p:tooltip for="pto" style="font-size:13px; color:#0078AB" rendered="#{p.hora_ponto != null}">
 										<b>IP:</b> #{p.ip}
@@ -123,8 +122,9 @@
 			<h:outputText value="Horas trabalhadas: #{registrosUsuarioBean.horasTrabalhadasMes}"/>			
 		</div>
 		<div align="center" style="width:50%; float:right;">
-			<p:commandButton id="btnSalvar" rendered="#{registrosUsuarioBean.usuarioEditado != null}" value="Salvar" actionListener="#{registrosUsuarioBean.salvarPontos}" update=":formTable" process=":formTable"/>
+			<p:commandButton id="btnSalvar" rendered="#{not empty registrosUsuarioBean.usuarioEditado.nome}" value="Salvar" actionListener="#{registrosUsuarioBean.salvarPontos}" update=":formTable" process=":formTable"/>
 		</div>
 		</h:form>
+		<p:growl id="growl"/>
 		</ui:define>
 </ui:composition>

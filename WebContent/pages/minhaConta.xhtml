@@ -73,10 +73,11 @@
 			</h:panelGrid>
 			<p:commandButton value="Alterar" actionListener="#{minhaContaBean.alterarSenha}" update="@form growlSenha" style="float:right;"/>
 		</h:form>
-		</p:dialog>
-		
+		</p:dialog>		
 		<script type="text/javascript">
-			document.getElementById("minhaConta").setAttribute("class","selected");
+			$(document).ready(function(){
+				$("#minhaConta").addClass("selected");
+			});
 		</script>
 		</ui:define>
 	</ui:composition>

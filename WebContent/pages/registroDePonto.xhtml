@@ -83,9 +83,11 @@
         </div>
 		<script src="../scripts/mostraHora.js" type="text/javascript"></script>
 		<script type="text/javascript">
-			UR_Start();
-			dataCompleta();
-			document.getElementById("registroDePonto").setAttribute("class","selected");
+			$(document).ready(function(){
+				UR_Start();
+				dataCompleta();
+				$("#registroDePonto").addClass("selected");
+			});
 		</script>
 		</ui:define>
 </ui:composition>

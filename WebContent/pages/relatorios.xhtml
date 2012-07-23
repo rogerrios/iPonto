@@ -97,7 +97,9 @@
 			</h:form>
 		</div>
 		<script type="text/javascript">
-			document.getElementById("relatorios").setAttribute("class","selected");
+		$(document).ready(function(){
+			$("#relatorios").addClass("selected");
+		});
 		</script>
 		</ui:define>
 </ui:composition>
