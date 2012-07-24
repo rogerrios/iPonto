@@ -42,7 +42,7 @@ public class RegistroBean {
 		}
 		
 	public void registrarPonto(ActionEvent ae) throws ParseException{
-		FacesContext context = FacesContext.getCurrentInstance();  
+		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
 				
 		Usuario u = (Usuario) session.getAttribute("usuario");
