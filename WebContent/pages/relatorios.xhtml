@@ -7,6 +7,11 @@
       xmlns:p="http://primefaces.org/ui">
       
 		<ui:define name="conteudo">
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#relatorios").addClass("selected");	
+			});
+		</script>
 		<link rel="stylesheet" type="text/css" href="../style/table.css" />
 		<div align="center">
 		<h:form prependId="false">
@@ -96,8 +101,5 @@
 				<h:outputText value="Horas trabalhadas: #{relatoriosBean.horasTrabalhadasMes}"/>
 			</h:form>
 		</div>
-		<script type="text/javascript">
-			document.getElementById("relatorios").setAttribute("class","selected");
-		</script>
 		</ui:define>
 </ui:composition>

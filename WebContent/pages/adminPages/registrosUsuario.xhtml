@@ -88,10 +88,10 @@
 								<h:form>
 								<td>
 									<p:inplace id="pto" emptyLabel="__:__">
-										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5">
-											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" />
+										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" label="Ponto" converterMessage="Hora Invalida">
+											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
 										</p:inputMask>
-										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}" process="txtHoraPonto" style="width:23px; height:20px;" update=":growl :formTable"/>
+										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}"  process="txtHoraPonto" style="width:23px; height:20px;" update=":growl :formTable"/>
 										<p:commandButton icon="ui-icon-closethick" title="Excluir" style="width:23px; height:20px;" onclick="dlg.show();" process="@this">
 											<f:setPropertyActionListener target="#{registrosUsuarioBean.pontoEditado}" value="#{p}" />
 										</p:commandButton>

@@ -25,9 +25,9 @@
         <ul id="menu">
         <h:form>
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-          <li id="registroDePonto"><a href="../registroDePonto.xhtml">Registrar Ponto</a></li>
-          <li id="relatorios"><a href="../relatorios.xhtml">Relatórios</a></li>
-          <li id="minhaConta"><a href="../minhaConta.xhtml">Minha Conta</a></li>
+          <li id="registroDePonto"><a href="../registroDePonto.jsf">Registrar Ponto</a></li>
+          <li id="relatorios"><a href="../relatorios.jsf">Relatórios</a></li>
+          <li id="minhaConta"><a href="../minhaConta.jsf">Minha Conta</a></li>
           <li id="adminPage" class="selected"><a href="registrosUsuario.jsf">Admin</a></li>
           <li id="sair"><h:commandLink action="#{loginBean.logOut}" value="Sair" /></li>
           </h:form>
@@ -49,7 +49,7 @@
     </div>
     
     <div id="footer">
-      <h:form><p><a href="../registroDePonto.xhtml">Registrar Ponto</a> | <a href="../relatorios.xhtml">Relatórios</a><h:outputText value=" | "/><h:commandLink action="#{loginBean.logOut}" value="Sair"/></p></h:form>
+      <h:form><p><a href="../registroDePonto.jsf">Registrar Ponto</a> | <a href="../relatorios.jsf">Relatórios</a><h:outputText value=" | "/><h:commandLink action="#{loginBean.logOut}" value="Sair"/></p></h:form>
     </div>
   </div>
   </f:view>

@@ -16,7 +16,7 @@ import model.Usuario;
 
 public class LoginBean {
 	private Usuario usuario = new Usuario();
-	private HttpSession session;
+	private HttpSession session = new CriaHttpSession().getSession();
 	private String email;
 	
 	public void esqueciSenha(ActionEvent ae) throws AddressException, MessagingException{
@@ -39,14 +39,13 @@ public class LoginBean {
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Usuario e/ou senha invalidos"));			
 			return null;
 		} else { 
-			session = new CriaHttpSession().getSession();
 			session.setAttribute("usuario", usuario);
 			return "registroDePonto";
 		}
 	}
 	
 	public String logOut(){
-		this.session.invalidate();
+		session.invalidate();
 		return "index";
 	}
 	

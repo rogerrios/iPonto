@@ -12,6 +12,11 @@
 				float:right;
 			}
 		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#minhaConta").addClass("selected");	
+			});
+		</script>
 		<div align="center">
 			<p:fieldset legend="Minha Conta" style="width:600px;"> 
 			<h:form prependId="false">
@@ -74,8 +79,5 @@
 			<p:commandButton value="Alterar" actionListener="#{minhaContaBean.alterarSenha}" update="@form growlSenha" style="float:right;"/>
 		</h:form>
 		</p:dialog>		
-		<script type="text/javascript">
-			document.getElementById("minhaConta").setAttribute("class","selected");
-		</script>
 		</ui:define>
 	</ui:composition>
