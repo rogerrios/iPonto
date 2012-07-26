@@ -4,6 +4,7 @@ import hibernate.EditUsuarioHibernate;
 import hibernate.RegistraPontoHibernate;
 import hibernate.RegistrosUsuarioHibernate;
 import hibernate.RelatoriosHibernate;
+import hibernate.UsuarioHibernate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,7 +77,6 @@ public class RegistrosUsuarioBean {
 			}
 		}
 		FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
-		novoPontosDoDia = new PontosDoDia();
 		pontosDoMesValue();
 	}
 	
@@ -205,7 +205,8 @@ public class RegistrosUsuarioBean {
 
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
-		usuarioEditado = pontosDoMes.get(0).getUsuario();
+		usuarioEditado = new UsuarioHibernate().getUsuarioById(usuarioEditado);
+		novoPontosDoDia = new PontosDoDia();
 		
 		minDate = mesAno();
 		

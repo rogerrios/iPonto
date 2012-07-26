@@ -37,4 +37,16 @@ public class UsuarioHibernate {
 			return true;
 		}
 	}
+	
+	public Usuario getUsuarioById(Usuario u){
+		Session session = factory.openSession();		
+		
+		Criteria criteria = session.createCriteria(Usuario.class);
+		criteria.add(Restrictions.eq("id_usuario", u.getId_usuario()));
+		
+		u = (Usuario) criteria.uniqueResult();
+		
+		session.close();
+		return u;
+	}
 }

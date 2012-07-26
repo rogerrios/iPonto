@@ -70,7 +70,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<h:form rendered="#{empty registrosUsuarioBean.pontosDoMes}">
+						<h:form rendered="#{empty registrosUsuarioBean.usuarioEditado.login}">
 							<tr style="height:35px;">
 								<td></td>
 								<td></td>
@@ -122,11 +122,13 @@
 								</td>
 							</tr>
 						</ui:repeat>
-						<h:form rendered="#{not empty registrosUsuarioBean.usuarioEditado.login}">
+						<h:form id="novoDiaForm" rendered="#{not empty registrosUsuarioBean.usuarioEditado.login}">
 							<tr>
 								<td>
 									<p:inplace label="Novo dia">
-										<p:calendar locale="pt" pattern="dd/MM/yyyy" value="#{registrosUsuarioBean.novoPontosDoDia.dia}" size="8" mindate="#{registrosUsuarioBean.minDate}" maxdate="#{registrosUsuarioBean.maxDate}" onfocus="$('.hiddenFields').fadeIn();"/>
+										<p:calendar locale="pt" pattern="dd/MM/yyyy" value="#{registrosUsuarioBean.novoPontosDoDia.dia}" size="8" mindate="#{registrosUsuarioBean.minDate}" maxdate="#{registrosUsuarioBean.maxDate}" onfocus="$('.hiddenFields').fadeIn();">
+											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+										</p:calendar>
 									</p:inplace>
 								</td>
 								<ui:repeat value="#{registrosUsuarioBean.novoPontosDoDia.pontos}" var="p">
@@ -137,7 +139,7 @@
 								</td>
 								</ui:repeat>
 								<td>
-									<p:commandButton actionListener="#{registrosUsuarioBean.novoDiaPonto}" process="@form" styleClass="hiddenFields" icon="ui-icon-check" title="Salvar" update=":growl :formTable"/>
+									<p:commandButton actionListener="#{registrosUsuarioBean.novoDiaPonto}" process=":formTable" styleClass="hiddenFields" icon="ui-icon-check" title="Salvar" update=":growl :formTable"/>
 								</td>
 							</tr>	
 						</h:form>				
