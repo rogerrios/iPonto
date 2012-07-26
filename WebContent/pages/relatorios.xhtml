@@ -34,13 +34,14 @@
 					<f:selectItem itemValue="11" itemLabel="Novembro" />
 					<f:selectItem itemValue="12" itemLabel="Dezembro" />					
 				</p:selectOneMenu>
-				<p:commandButton id="btnOk" value="Ok" actionListener="#{relatoriosBean.pontosDoMesValue}" update="@form :formTable :summary"/>
+				<p:commandButton id="btnOk" value="Ok" actionListener="#{relatoriosBean.pontosDoMesValue}" update="@form :formTable"/>
 			</h:panelGrid>			
 		</h:form>
 		</div>
 
 		<div align="center">
 			<h:form id="formTable">
+			<h:outputText value="#{loginBean.usuario.nome} (#{loginBean.usuario.login})" style="font-weight:bold; font-size:15px"/>
 				<table id="tabela">
 					<thead>
 						<tr>
@@ -92,14 +93,18 @@
 						</ui:repeat>					
 					</tbody>
 				</table>
+				<div align="center">
+					<h:outputText value="Dias trabalhados: #{relatoriosBean.diasTrabalhadosMes}"/>
+					<br/>
+					<h:outputText value="Horas trabalhadas: #{relatoriosBean.horasTrabalhadasMes}"/>
+				</div>
 			</h:form>
 		</div>
 		<div align="center">
-			<h:form id="summary">
-				<h:outputText value="Dias trabalhados: #{relatoriosBean.diasTrabalhadosMes}"/>
-				<br/>
-				<h:outputText value="Horas trabalhadas: #{relatoriosBean.horasTrabalhadasMes}"/>
-			</h:form>
+			<br/>
+			<p:commandButton value="Imprimir" type="button" icon="ui-icon-print">
+				<p:printer target="formTable" />
+			</p:commandButton>
 		</div>
 		</ui:define>
 </ui:composition>

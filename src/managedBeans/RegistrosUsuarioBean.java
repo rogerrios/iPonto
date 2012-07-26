@@ -7,19 +7,21 @@ import hibernate.RelatoriosHibernate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import model.Ponto;
 import model.PontosDoDia;
 import model.Usuario;
+import util.ClientIP;
 import util.CriaHttpSession;
+import util.MesclaDataHora;
 import util.MinutosEmHoras;
 
 public class RegistrosUsuarioBean {
@@ -37,6 +39,46 @@ public class RegistrosUsuarioBean {
 	private Ponto pontoEditado;
 	private static FacesMessage MSG_PONTO_INVALIDO;
 	private static FacesMessage MSG_PONTO_EDITADO;
+	private Date minDate;
+	private Date maxDate;
+	private PontosDoDia novoPontosDoDia;
+	
+	public RegistrosUsuarioBean(){
+		session = new CriaHttpSession().getSession();
+		horasTrabalhadasMes = "00:00";
+		diasTrabalhadosMes = 0;
+		usuarioEditado = new Usuario();
+		pontoEditado = new Ponto();
+		novoPontosDoDia = new PontosDoDia();
+		MSG_PONTO_INVALIDO = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Ponto invalido", "");
+		MSG_PONTO_EDITADO = new FacesMessage(FacesMessage.SEVERITY_INFO,"Ponto editado", "");	
+	}
+		
+	public void novoDiaPonto(){
+		RegistraPontoHibernate rph = new RegistraPontoHibernate();
+		String ip = new ClientIP().getIp();
+		MesclaDataHora mdh = new MesclaDataHora();
+		Date dia = novoPontosDoDia.getDia();
+		List<Ponto> pontos = novoPontosDoDia.getPontos();
+		
+		for (int i=0; i<pontos.size();i++){
+			Ponto p = pontos.get(i);
+			
+			if (p.getHora_ponto() != null){
+				p.setHora_ponto(mdh.Mesclar(dia, p.getHora_ponto()));
+				p.setHora_salva(new Date());
+				p.setTipo(i);
+				p.setUsuario(usuarioEditado);
+				p.setUsuarioEdit((Usuario) session.getAttribute("usuario"));
+				p.setIp(ip);
+				
+				rph.registraPonto(p);
+			}
+		}
+		FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
+		novoPontosDoDia = new PontosDoDia();
+		pontosDoMesValue();
+	}
 	
 	public void deletePonto(ActionEvent ae){
 		new RegistrosUsuarioHibernate().deletarPonto(pontoEditado);
@@ -52,9 +94,7 @@ public class RegistrosUsuarioBean {
 		SimpleDateFormat dfDia = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat dfDiaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest)context.getExternalContext().getRequest();
-		String ip = request.getRemoteAddr();
+		String ip = new ClientIP().getIp();
 		
 		Usuario u = (Usuario) session.getAttribute("usuario");
 		
@@ -80,7 +120,7 @@ public class RegistrosUsuarioBean {
 				Date dtAntiga = p.getHora_ponto();
 				
 				if (dtNova==null && dtAntiga != null){				
-					context.addMessage(null, MSG_PONTO_INVALIDO);
+					FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_INVALIDO);
 					pontosDoMesValue();
 					stop = true;
 					break;
@@ -110,9 +150,9 @@ public class RegistrosUsuarioBean {
 						if (pontoPosterior==null && novoPonto.compareTo(pontoAnterior)>=0 || pontoPosterior!=null && novoPonto.compareTo(pontoPosterior)<=0 && novoPonto.compareTo(pontoAnterior)>=0){
 							p.setHora_ponto(novoPonto);						
 							new RegistraPontoHibernate().updatePonto(p);
-							context.addMessage(null, MSG_PONTO_EDITADO);
+							FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
 						} else {
-							context.addMessage(null, MSG_PONTO_INVALIDO);
+							FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_INVALIDO);
 						}
 						
 						pontosDoMesValue();
@@ -136,19 +176,17 @@ public class RegistrosUsuarioBean {
 						try {
 							tipo = rph.tipoDoProxregistro(novoPonto, usuarioEditado);
 						} catch (Exception e) {
-							context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Limite de registros do dia excedido", ""));
+							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Limite de registros do dia excedido", ""));
 						}
 						
 						if (tipo != null){
 							rph.registraPonto(p);
-							context.addMessage(null, MSG_PONTO_EDITADO);
+							FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
 						}
 					} else {
-						context.addMessage(null, MSG_PONTO_INVALIDO);
+						FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_INVALIDO);
 					}
-					
-					
-								
+												
 					pontosDoMesValue();
 					stop = true;
 					break;
@@ -168,6 +206,14 @@ public class RegistrosUsuarioBean {
 		diasTrabalhadosMes = pontosDoMes.size();
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
 		usuarioEditado = pontosDoMes.get(0).getUsuario();
+		
+		minDate = mesAno();
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(minDate);
+		int d = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		cal.set(Calendar.DAY_OF_MONTH, d);
+		maxDate = cal.getTime();
 	}
 	
 	public void getAnosValue(){
@@ -191,16 +237,6 @@ public class RegistrosUsuarioBean {
 			e.printStackTrace();
 		}
 		return dt;
-	}
-	
-	public RegistrosUsuarioBean(){
-		session = new CriaHttpSession().getSession();
-		horasTrabalhadasMes = "00:00";
-		diasTrabalhadosMes = 0;
-		usuarioEditado = new Usuario();
-		pontoEditado = new Ponto();
-		MSG_PONTO_INVALIDO = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Ponto invalido", "");
-		MSG_PONTO_EDITADO = new FacesMessage(FacesMessage.SEVERITY_INFO,"Ponto editado", "");
 	}
 
 	public void setColaboradoresList(List<Usuario> colaboradoresList) {
@@ -269,5 +305,29 @@ public class RegistrosUsuarioBean {
 
 	public void setPontoEditado(Ponto pontoEditado) {
 		this.pontoEditado = pontoEditado;
+	}
+
+	public Date getMinDate() {
+		return minDate;
+	}
+
+	public void setMinDate(Date minDate) {
+		this.minDate = minDate;
+	}
+
+	public Date getMaxDate() {
+		return maxDate;
+	}
+
+	public void setMaxDate(Date maxDate) {
+		this.maxDate = maxDate;
+	}
+
+	public PontosDoDia getNovoPontosDoDia() {
+		return novoPontosDoDia;
+	}
+
+	public void setNovoPontosDoDia(PontosDoDia novoPontosDoDia) {
+		this.novoPontosDoDia = novoPontosDoDia;
 	}
 }

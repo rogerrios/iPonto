@@ -2,24 +2,29 @@ package tests;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class test3 {
 
 
 	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyy HH:mm");
-		Date dt = new Date();
-		long l = dt.getTime();
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
+		Date dt = null;
+		try {
+			dt = df.parse("201202");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		System.out.println(dt);
 		
-		Date dt2 = df.parse("11/07/2012 13:00");
-		long l2 = dt2.getTime();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dt);
+		int d = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		cal.set(Calendar.DAY_OF_MONTH, d);
 		
-		dt.setTime(l2-l);
-		
-		df.applyPattern("HH:mm");
-		
-		System.out.println(df.format(dt));
+		System.out.println(cal.getTime());
 	}
 
 }

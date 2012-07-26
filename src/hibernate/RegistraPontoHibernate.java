@@ -19,12 +19,16 @@ public class RegistraPontoHibernate {
 		this.factory = new CriaSessionFactory().getFactory();
 	}
 	
-	public void registraPonto(Ponto p) throws ParseException{
+	public void registraPonto(Ponto p){
 		
 		//Zerando os segundos do ponto
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		String data = df.format(p.getHora_ponto());		
-		p.setHora_ponto(df.parse(data));
+		try {
+			p.setHora_ponto(df.parse(data));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		Session session = factory.openSession();					
 		session.beginTransaction();
