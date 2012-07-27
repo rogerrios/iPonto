@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
       
 		<ui:define name="conteudo">
-		<script src="../../scripts/calendar_pt.js" type="text/javascript"></script>
+		<script src="../../scripts/calendar_pt_BR.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="../../style/table.css" />
 		<style type="text/css">
 			input[type=text] {
@@ -86,18 +86,17 @@
 							<tr>
 								<td>
 									<h:outputText value="#{lista.dia}">
-										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{timeZoneBean.timeZone}"/>
 									</h:outputText>
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
 								<h:form>
-								<td>
-								
+								<td>		
 									<p:inplace id="pto" emptyLabel="__:__">
 										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" label="Ponto" converterMessage="Hora Invalida">
-											<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+											<f:convertDateTime pattern="HH:mm" timeZone="#{timeZoneBean.timeZone}"/>
 										</p:inputMask>
-										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}"  process="txtHoraPonto" style="width:23px; height:20px;" update=":growl :formTable"/>
+										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}" process="txtHoraPonto" style="width:23px; height:20px;" update=":growl :formTable"/>
 										<p:commandButton icon="ui-icon-closethick" title="Excluir" style="width:23px; height:20px;" onclick="dlg.show();" process="@this">
 											<f:setPropertyActionListener target="#{registrosUsuarioBean.pontoEditado}" value="#{p}" />
 										</p:commandButton>
@@ -126,15 +125,13 @@
 							<tr>
 								<td>
 									<p:inplace label="Novo dia">
-										<p:calendar locale="pt" pattern="dd/MM/yyyy" value="#{registrosUsuarioBean.novoPontosDoDia.dia}" size="8" mindate="#{registrosUsuarioBean.minDate}" maxdate="#{registrosUsuarioBean.maxDate}" onfocus="$('.hiddenFields').fadeIn();">
-											<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
-										</p:calendar>
+										<p:calendar id="idDia" locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3" value="#{registrosUsuarioBean.novoPontosDoDia.dia}" size="8" mindate="#{registrosUsuarioBean.minDate}" maxdate="#{registrosUsuarioBean.maxDate}" onfocus="$('.hiddenFields').fadeIn();"/>
 									</p:inplace>
 								</td>
 								<ui:repeat value="#{registrosUsuarioBean.novoPontosDoDia.pontos}" var="p">
 								<td>
-									<p:inputMask styleClass="hiddenFields" mask="99:99" size="5" value="#{p.hora_ponto}">
-										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3"/>
+									<p:inputMask id="idHora" styleClass="hiddenFields" mask="99:99" size="5" value="#{p.hora_ponto}">
+										<f:convertDateTime pattern="HH:mm" timeZone="GMT-3" locale="pt_BR"/>
 									</p:inputMask>
 								</td>
 								</ui:repeat>

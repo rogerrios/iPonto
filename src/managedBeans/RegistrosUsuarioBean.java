@@ -28,21 +28,21 @@ import util.MinutosEmHoras;
 public class RegistrosUsuarioBean {
 	
 	private HttpSession session;
-	private List<Usuario> colaboradoresList;
+	private PontosDoDia novoPontosDoDia;
+	private Ponto pontoEditado;
 	private Usuario usuarioEditado;
+	private List<Usuario> colaboradoresList;
 	private List<String> anos;
-	private Integer ano;
-	private String mes;
 	private List<PontosDoDia> pontosDoMes;
 	private List<PontosDoDia> pontosDoMesCopy;
-	private String horasTrabalhadasMes;
+	private Integer ano;
 	private Integer diasTrabalhadosMes;
-	private Ponto pontoEditado;
-	private static FacesMessage MSG_PONTO_INVALIDO;
-	private static FacesMessage MSG_PONTO_EDITADO;
+	private String mes;
+	private String horasTrabalhadasMes;
 	private Date minDate;
 	private Date maxDate;
-	private PontosDoDia novoPontosDoDia;
+	private static FacesMessage MSG_PONTO_INVALIDO;
+	private static FacesMessage MSG_PONTO_EDITADO;
 	
 	public RegistrosUsuarioBean(){
 		session = new CriaHttpSession().getSession();
@@ -60,6 +60,7 @@ public class RegistrosUsuarioBean {
 		String ip = new ClientIP().getIp();
 		MesclaDataHora mdh = new MesclaDataHora();
 		Date dia = novoPontosDoDia.getDia();
+
 		List<Ponto> pontos = novoPontosDoDia.getPontos();
 		
 		for (int i=0; i<pontos.size();i++){
@@ -87,37 +88,30 @@ public class RegistrosUsuarioBean {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	
-	public void salvarPonto(ActionEvent ae) throws ParseException{
+	public void salvarPonto(ActionEvent ae){
 		pontosDoMesCopy = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
+		MesclaDataHora mdh = new MesclaDataHora();	
+		String ip = new ClientIP().getIp();	
+		Usuario u = (Usuario) session.getAttribute("usuario");		
+		boolean stop = false;
 		
-		SimpleDateFormat dfHora = new SimpleDateFormat("HH:mm");
-		SimpleDateFormat dfDia = new SimpleDateFormat("dd/MM/yyyy");
-		SimpleDateFormat dfDiaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-		
-		String ip = new ClientIP().getIp();
-		
-		Usuario u = (Usuario) session.getAttribute("usuario");
-		
-		boolean stop = false;		
 		for (int i=0; i < pontosDoMes.size(); i++){
 			if (stop){
 				break;
 			}
 			
 			List<Ponto> pList = pontosDoMes.get(i).getPontos();
-			List<Ponto> pListCopy = pontosDoMesCopy.get(i).getPontos();
-			
-			String strDia = dfDia.format(pontosDoMes.get(i).getDia());
+			List<Ponto> pListCopy = pontosDoMesCopy.get(i).getPontos();			
+			Date dia = pontosDoMes.get(i).getDia();
 	
-			for (int j=0; j < pList.size(); j++){
-				Date dtNova = pList.get(j).getHora_ponto();
-				
+			for (int j=0; j < pList.size(); j++){			
 				Ponto p = pListCopy.get(j);
 				p.setHora_salva(new Date());
 				p.setIp(ip);
 				p.setUsuarioEdit(u);
 				
 				Date dtAntiga = p.getHora_ponto();
+				Date dtNova = pList.get(j).getHora_ponto();
 				
 				if (dtNova==null && dtAntiga != null){				
 					FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_INVALIDO);
@@ -128,27 +122,25 @@ public class RegistrosUsuarioBean {
 		
 				//Se as duas datas forem diferentes de null, o ponto está sendo editado
 				else if (dtNova!=null && dtAntiga!=null){
-					String strNova = dfHora.format(dtNova);
-					String strAntiga = dfHora.format(dtAntiga);
-					
-					if (!strNova.equals(strAntiga)){
-						Date novoPonto = dfDiaHora.parse(strDia+" "+strNova);
+					dtNova = mdh.Mesclar(dia, dtNova);
+
+					if (!dtNova.equals(dtAntiga)){
 						Date pontoAnterior = new Date();
 						Date pontoPosterior = new Date();
 
 						if (j == 0){
-							pontoAnterior.setTime(novoPonto.getTime());
+							pontoAnterior.setTime(dtNova.getTime());
 							pontoPosterior = pListCopy.get(j+1).getHora_ponto();
 						} else if (j == pListCopy.size()-1){
-							pontoPosterior.setTime(novoPonto.getTime());
+							pontoPosterior.setTime(dtNova.getTime());
 							pontoAnterior = pListCopy.get(j-1).getHora_ponto();
 						} else {
 							pontoAnterior = pListCopy.get(j-1).getHora_ponto();
 							pontoPosterior = pListCopy.get(j+1).getHora_ponto();
 						}
 					
-						if (pontoPosterior==null && novoPonto.compareTo(pontoAnterior)>=0 || pontoPosterior!=null && novoPonto.compareTo(pontoPosterior)<=0 && novoPonto.compareTo(pontoAnterior)>=0){
-							p.setHora_ponto(novoPonto);						
+						if (pontoPosterior==null && dtNova.compareTo(pontoAnterior)>=0 || pontoPosterior!=null && dtNova.compareTo(pontoPosterior)<=0 && dtNova.compareTo(pontoAnterior)>=0){
+							p.setHora_ponto(dtNova);						
 							new RegistraPontoHibernate().updatePonto(p);
 							FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
 						} else {
@@ -163,23 +155,23 @@ public class RegistrosUsuarioBean {
 				
 				//se dtNova nao for null e dtAntiga for null, um novo ponto será registrado
 				else if (dtNova!=null && dtAntiga==null){
-					String strNova = dfHora.format(dtNova);
-					Date novoPonto = dfDiaHora.parse(strDia+" "+strNova);
+					dtNova = mdh.Mesclar(dia, dtNova);
 					Date pontoAnterior = pListCopy.get(j-1).getHora_ponto();
 					
-					if (novoPonto.compareTo(pontoAnterior)>=0){
-						p.setHora_ponto(novoPonto);				
+					if (pontoAnterior!=null && dtNova.compareTo(pontoAnterior)>=0){
+						p.setHora_ponto(dtNova);				
 						p.setUsuario(usuarioEditado);
 						
 						Integer tipo = null;
 						RegistraPontoHibernate rph = new RegistraPontoHibernate();
 						try {
-							tipo = rph.tipoDoProxregistro(novoPonto, usuarioEditado);
+							tipo = rph.tipoDoProxregistro(dtNova, usuarioEditado);
 						} catch (Exception e) {
 							FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Limite de registros do dia excedido", ""));
 						}
 						
 						if (tipo != null){
+							p.setTipo(tipo);
 							rph.registraPonto(p);
 							FacesContext.getCurrentInstance().addMessage(null, MSG_PONTO_EDITADO);
 						}
@@ -196,7 +188,14 @@ public class RegistrosUsuarioBean {
 	}
 	
 	public void pontosDoMesValue(){
-		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(mesAno(), usuarioEditado);
+		minDate = mesAno();	
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(minDate);
+		int d = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		cal.set(Calendar.DAY_OF_MONTH, d);
+		maxDate = cal.getTime();
+		
+		pontosDoMes = new RelatoriosHibernate().getPontosDoMes(minDate, usuarioEditado);
 		
 		int minutosTrabalhados = 0;
 		for (PontosDoDia p : pontosDoMes){
@@ -207,14 +206,6 @@ public class RegistrosUsuarioBean {
 		horasTrabalhadasMes = new MinutosEmHoras().minutosEmHoras(minutosTrabalhados);
 		usuarioEditado = new UsuarioHibernate().getUsuarioById(usuarioEditado);
 		novoPontosDoDia = new PontosDoDia();
-		
-		minDate = mesAno();
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(minDate);
-		int d = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		cal.set(Calendar.DAY_OF_MONTH, d);
-		maxDate = cal.getTime();
 	}
 	
 	public void getAnosValue(){

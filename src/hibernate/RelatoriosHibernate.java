@@ -34,8 +34,7 @@ public class RelatoriosHibernate {
 		
 		@SuppressWarnings("unchecked")
 		List<String> anos = query.list();
-		session.close();
-		
+		session.close();	
 		return anos;
 	}
 	
@@ -49,8 +48,7 @@ public class RelatoriosHibernate {
 
 		@SuppressWarnings("unchecked")
 		List<Date> dias = query.list();
-		session.close();
-		
+		session.close();		
 		return dias;
 	}
 	
@@ -103,11 +101,8 @@ public class RelatoriosHibernate {
 		
 		for (PontosDoDia pdd : pontosDoMesList){
 			int p = pdd.getPontos().size();
-			if (p < 6){
 				for (int i=0; i < -p+6; i++){
-					Ponto pto = new Ponto();
-					pdd.getPontos().add(pto);
-				}
+					pdd.getPontos().add(new Ponto());
 			}
 		}
 		return pontosDoMesList;

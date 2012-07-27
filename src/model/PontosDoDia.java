@@ -19,19 +19,20 @@ public class PontosDoDia {
 		}
 		this.pontos = pontosList;
 	}
-	
+	public void setDia(Date dia) {
+		//dia = new MesclaDataHora().Mesclar(dia, dia);
+		this.dia = dia;
+	}
+	public Date getDia() {
+		return dia;
+	}
 	public Usuario getUsuario() {
 		return usuario;
 	}
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Date getDia() {
-		return dia;
-	}
-	public void setDia(Date dia) {
-		this.dia = dia;
-	}
+	
 	public Integer getMinutos() {
 		return minutos;
 	}

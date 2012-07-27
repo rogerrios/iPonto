@@ -8,15 +8,16 @@ public class MesclaDataHora {
 	
 	private SimpleDateFormat dfHora = new SimpleDateFormat("HH:mm");
 	private SimpleDateFormat dfDia = new SimpleDateFormat("dd/MM/yyyy");
-	private SimpleDateFormat dfDiaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private SimpleDateFormat dfDiaHora = new SimpleDateFormat("dd/MM/yyyyHH:mm");
 	
 	public Date Mesclar(Date data, Date hora){
 		String strDia = dfDia.format(data);
 		String strHora = dfHora.format(hora);
-		
+
 		Date dt = null;
+		
 		try {
-			dt = dfDiaHora.parse(strDia+" "+strHora);
+			dt = dfDiaHora.parse(strDia+strHora);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

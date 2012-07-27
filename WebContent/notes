@@ -6,3 +6,5 @@
 </p:dialog>
 
 mindate="01/07/12" maxdate="30/07/12"
+
+<p:calendar id="idDia" locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3" value="#{registrosUsuarioBean.novoPontosDoDia.dia}" size="8" mindate="#{registrosUsuarioBean.minDate}" maxdate="#{registrosUsuarioBean.maxDate}" onfocus="$('.hiddenFields').fadeIn();"/>

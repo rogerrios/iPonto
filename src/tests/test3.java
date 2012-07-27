@@ -2,8 +2,8 @@ package tests;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class test3 {
 
@@ -11,20 +11,12 @@ public class test3 {
 	public static void main(String[] args) throws ParseException {
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");
-		Date dt = null;
-		try {
-			dt = df.parse("201202");
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		//System.out.println(df.getTimeZone());
+		//df.setTimeZone(TimeZone.getTimeZone("Etc/GMT-3"));
+		Date dt = df.parse("201201");
 		System.out.println(dt);
+		System.out.println(TimeZone.getDefault());
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(dt);
-		int d = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		cal.set(Calendar.DAY_OF_MONTH, d);
-		
-		System.out.println(cal.getTime());
 	}
 
 }

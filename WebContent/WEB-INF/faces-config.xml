@@ -47,6 +47,11 @@
 	<managed-bean-class>managedBeans.RegistrosUsuarioBean</managed-bean-class>
 	<managed-bean-scope>session</managed-bean-scope>
 </managed-bean>
+<managed-bean>
+	<managed-bean-name>timeZoneBean</managed-bean-name>
+	<managed-bean-class>managedBeans.TimeZoneBean</managed-bean-class>
+	<managed-bean-scope>session</managed-bean-scope>
+</managed-bean>
 
 <navigation-rule>
 	<navigation-case>
