@@ -17,7 +17,6 @@
 				display:none;
 			}
 		</style>
-
 		<div align="center">
 		<h:form id="selectForm" prependId="false">
 			<h:panelGrid columns="4">
@@ -86,7 +85,7 @@
 							<tr>
 								<td>
 									<h:outputText value="#{lista.dia}">
-										<f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{timeZoneBean.timeZone}"/>
+										<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="GMT-3"/>
 									</h:outputText>
 								</td>
 								<ui:repeat value="#{lista.pontos}" var="p">
@@ -94,7 +93,7 @@
 								<td>		
 									<p:inplace id="pto" emptyLabel="__:__">
 										<p:inputMask id="txtHoraPonto" value="#{p.hora_ponto}" maxlength="5" mask="99:99" size="5" label="Ponto" converterMessage="Hora Invalida">
-											<f:convertDateTime pattern="HH:mm" timeZone="#{timeZoneBean.timeZone}"/>
+											<f:convertDateTime pattern="HH:mm" type="time" timeZone="GMT-3"/>
 										</p:inputMask>
 										<p:commandButton icon="ui-icon-check" title="Salvar" actionListener="#{registrosUsuarioBean.salvarPonto}" process="txtHoraPonto" style="width:23px; height:20px;" update=":growl :formTable"/>
 										<p:commandButton icon="ui-icon-closethick" title="Excluir" style="width:23px; height:20px;" onclick="dlg.show();" process="@this">
@@ -155,9 +154,7 @@
 				<p:printer target="formTable" />
 			</p:commandButton>
 		</div>
-		
 		<p:growl id="growl"/>
-		
 		<p:confirmDialog message="Excluir registro selecionado?" widgetVar="dlg" resizable="false" modal="true">
 			<p:commandButton value="Excluir" actionListener="#{registrosUsuarioBean.deletePonto}" update=":growl :formTable" oncomplete="dlg.hide()" style="float:right;"/>
 			<p:commandButton value="Cancelar" onclick="dlg.hide();" type="button" style="float:right;"/>
