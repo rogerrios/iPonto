@@ -54,16 +54,6 @@ public class RegistrosUsuarioBean {
 		MSG_PONTO_INVALIDO = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Ponto invalido", "");
 		MSG_PONTO_EDITADO = new FacesMessage(FacesMessage.SEVERITY_INFO,"Ponto editado", "");	
 	}
-	
-	public String getTimeZone(){
-		String timeZone = "GMT-3";
-		if ( mes !=null && mes.equals("01")){
-			timeZone="GMT-2";
-		} else {
-			timeZone="GMT-3";
-		}
-		return timeZone;
-	}
 		
 	public void novoDiaPonto(){
 		RegistraPontoHibernate rph = new RegistraPontoHibernate();

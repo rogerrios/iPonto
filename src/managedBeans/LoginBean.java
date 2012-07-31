@@ -31,12 +31,15 @@ public class LoginBean {
 		}
 	}
 	
-	public String fazLogin(){	
+	public String fazLogin(){
+		FacesContext context = FacesContext.getCurrentInstance();
 		usuario = new LoginHibernate().fazLogin(usuario);
 		
 		if (usuario.getPermissao() == null){
-			FacesContext context = FacesContext.getCurrentInstance();
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Usuario e/ou senha invalidos"));			
+			return null;
+		} else if (usuario.getStatus().equalsIgnoreCase("desativado")){
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Usuario desativado. Consulte um administrador."));			
 			return null;
 		} else { 
 			session.setAttribute("usuario", usuario);

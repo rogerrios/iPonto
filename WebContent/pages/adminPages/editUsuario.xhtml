@@ -18,8 +18,8 @@
 		<p:fieldset legend="Selecione Colaborador">
 		<h:panelGrid id="colabGrid" columns="1" cellpadding="20" cellspacing="12" style="text-align:left;width:250px;">	
 				<p:selectOneRadio id="cbPermissao" value="#{editBean.filtroPermissao}" required="true">  
-            		<f:selectItem itemLabel="Usuários" itemValue="USER" />  
-            		<f:selectItem itemLabel="Administradores" itemValue="ADMIN" />
+            		<f:selectItem id="chkUsers" itemLabel="Usuários" itemValue="USER"/>  
+            		<f:selectItem itemLabel="Administradores" itemValue="ADMIN"/>
             	<p:ajax event="change" listener="#{editBean.populaColaboradores}" update="cbColaborador"/>
         		</p:selectOneRadio>
         		
@@ -65,7 +65,7 @@
 					<p:message for="cbStatus" display="icon"/>
 					
 					<h:outputText/>
-					<p:commandButton value="Salvar" update="@form" ajax="true" actionListener="#{editBean.updateUsuario}" style="float:right;"/>
+					<p:commandButton value="Salvar" update="@form" actionListener="#{editBean.updateUsuario}" style="float:right;"/>
 					<h:outputText/>					
 				</h:panelGrid>
 				<p:growl id="growl" for="msgSucesso" showDetail="true" showSummary="false"/>
