@@ -8,6 +8,7 @@ import java.util.List;
 
 import model.Cliente;
 import model.PontosDoDia;
+import model.UF;
 import model.Usuario;
 
 import org.hibernate.Session;
@@ -21,9 +22,15 @@ public class test1 {
 		session.beginTransaction();
 		
 		Cliente cliente = new Cliente();
-		cliente.setId_clientes(1);
+		cliente.setCidade("Belo Horizonte");
+		cliente.setNome_cliente("Vetta");
+		cliente.setUf(UF.MG);
 		
-		Usuario u = new Usuario();
+		session.save(cliente);
+		session.getTransaction().commit();
+		session.close();
+		
+		/*Usuario u = new Usuario();
 		u.setCliente(cliente);
 		u.setId_usuario(1);
 		u.setEmail("admin@email.com");
@@ -34,7 +41,7 @@ public class test1 {
 		u.setStatus("ATIVADO");
 		
 		List<PontosDoDia> mes = new RelatoriosHibernate().getPontosDoMes(new Date(), u);
-		System.out.println(mes);
+		System.out.println(mes);*/
 	}
 
 }

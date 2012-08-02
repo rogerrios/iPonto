@@ -21,8 +21,9 @@ public class Cliente {
 	private String tel_cel;
 	private String status;
 	private String cidade;
-	private String uf;
+	private UF uf;
 	private String permissao;
+	private String cep;
 	
 	public int getId_clientes() {
 		return id_clientes;
@@ -84,10 +85,10 @@ public class Cliente {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	public String getUf() {
+	public UF getUf() {
 		return uf;
 	}
-	public void setUf(String uf) {
+	public void setUf(UF uf) {
 		this.uf = uf;
 	}
 	public String getPermissao() {
@@ -95,6 +96,12 @@ public class Cliente {
 	}
 	public void setPermissao(String permissao) {
 		this.permissao = permissao;
+	}
+	public String getCep() {
+		return cep;
+	}
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 	
 }

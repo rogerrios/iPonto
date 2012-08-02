@@ -37,14 +37,13 @@ public class LoginBean {
 		
 		if (usuario.getPermissao() == null){
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Usuario e/ou senha invalidos"));			
-			return null;
 		} else if (usuario.getStatus().equalsIgnoreCase("desativado")){
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Usuario desativado. Consulte um administrador."));			
-			return null;
 		} else { 
 			session.setAttribute("usuario", usuario);
 			return "registroDePonto";
 		}
+		return null;
 	}
 	
 	public String logOut(){

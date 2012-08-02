@@ -7,11 +7,10 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
   <title>iPonto Web</title>
-  <meta name="description" content="sistema gratis de controle de ponto" />
-  <meta name="keywords" content="sistema de ponto, registro de ponto, bater ponto, controle de ponto" />
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <link rel="stylesheet" type="text/css" href="style/style.css" />
-  <link rel="stylesheet" type="text/css" href="style/table.css" />
 </h:head>
 
 <h:body>
@@ -29,41 +28,45 @@
           <h1><a href="index.jsf">iPonto<span class="logo_colour">Web</span></a></h1>
         </div>
       </div>
-      
       <div id="menubar" align="center">
         <ul id="menu">
           <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
           <li id="index" class="selected"><a>Entrar</a></li>
         </ul>
       </div>
-      
     </div>
 
     <div id="site_content">
       <div id="content">
-			<div align="center">
-				<h:form prependId="false">
-					<h:panelGrid columns="2">
-						<h:outputLabel value="Usuário:" for="txtUsuario" />
-						<h:inputText id="txtUsuario" value="#{loginBean.usuario.login}"	maxlength="45"/>
-
-						<h:outputLabel value="Senha:" for="txtSenha" />
-						<h:inputSecret id="txtSenha" value="#{loginBean.usuario.senha}"	maxlength="45"/>
-
-						<f:facet name="footer">
-							<h:commandButton value="Entrar" style="float:right; width: 80px; height: 25px;" action="#{loginBean.fazLogin}" />
-						</f:facet>
-						</h:panelGrid>
-						<p:commandLink value="Esqueci minha senha" onclick="dlg.show()"/>
-					</h:form>
-				</div>
+			<div style="width:47%; float:left;">
+				<p:fieldset legend="O primeiro sistema de ponto online grátis!">
+				<p>Controle a frequencia e o desempenho de seus funcionários, de uma maneira fácil e prática.</p>
+				</p:fieldset>
 			</div>
-    </div>  
-     
+			<div style="width:47%; float:right;">
+				<p:fieldset legend="Abra sua conta grátis!">
+					<h:form prependId="false">
+						<h:panelGrid cellspacing="5" columns="3">
+							<p:outputLabel value="Nome:" for="txtNome" />
+							<p:inputText id="txtNome" value="#{clienteBean.cliente.nome_cliente}" required="true" size="40" maxlength="100"/>
+							<p:message for="txtNome" display="icon"/>
+							
+							<p:outputLabel value="Email:" for="txtEmail" />
+							<p:inputText id="txtEmail" value="#{clienteBean.cliente.email}" required="true" maxlength="100"/>
+							<p:message for="txtEmail" display="icon"/>
+							
+							<f:facet name="footer">
+								<p:commandButton type="button" value="Cadastrar" style="float:right;"/>
+							</f:facet>
+						</h:panelGrid>
+					</h:form>
+				</p:fieldset>
+			</div>
+		</div>
+    </div>   
     <div id="footer">
       <p>Bem Vindo</p>
     </div>
-    
   </div>
   
 	<p:dialog header="Enviaremos a senha no email cadastrado" widgetVar="dlg" resizable="false" modal="true">
@@ -76,12 +79,10 @@
 			<p:commandButton value="Enviar" actionListener="#{loginBean.esqueciSenha}" update="growl" onstart="dlg.hide(); statusDialog.show();" oncomplete="statusDialog.hide();" style="float:right;"/>
 		</h:form>
 	</p:dialog>
-	
 	<script type="text/javascript">	
 			$(document).ready(function(){
 				$("#txtUsuario").focus();
 			});
 	</script>
-	
 </h:body>
 </html>
